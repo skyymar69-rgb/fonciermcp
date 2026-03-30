@@ -1,140 +1,209 @@
 <!DOCTYPE html>
 <html lang="fr"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FoncierMCP — Analyse fonciere IA</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="FoncierMCP — Analysez n'importe quelle adresse en 2 secondes. Cadastre, DVF, PLU, géorisques, DPE.">
+<title>FoncierMCP — L'intelligence foncière pour les professionnels</title>
+<link rel="stylesheet" href="assets/style.css">
 <style>
-:root{--bg:#0f0e0c;--s:#1a1814;--s2:#242018;--b:#2e2b24;--gold:#c9960c;--g2:#e8b020;--t:#e8e0d0;--m:#7a7060}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--t);font-family:-apple-system,sans-serif;min-height:100vh}
-header{border-bottom:1px solid var(--b);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:var(--s)}
-.logo{font-size:1.1rem;font-weight:700}.logo span{color:var(--gold)}
-.badge{background:var(--gold);color:#000;font-size:.65rem;font-weight:700;padding:.2rem .6rem;border-radius:2px;text-transform:uppercase}
-main{max-width:900px;margin:0 auto;padding:3rem 2rem}
-h1{font-size:2rem;font-weight:700;line-height:1.2;margin-bottom:.5rem}
-h1 em{color:var(--gold);font-style:normal}
-.sub{color:var(--m);margin-bottom:2.5rem;line-height:1.6}
-.sb{display:flex;gap:.75rem;margin-bottom:1.5rem;background:var(--s);border:1px solid var(--b);border-radius:8px;padding:.75rem}
-.sb input{flex:1;background:transparent;border:none;outline:none;color:var(--t);font-size:1rem;padding:.25rem .5rem}
-.sb input::placeholder{color:var(--m)}
-.sb button{background:var(--gold);color:#000;border:none;border-radius:5px;padding:.6rem 1.4rem;font-size:.9rem;font-weight:700;cursor:pointer}
-.sb button:disabled{opacity:.5;cursor:not-allowed}
-.ex{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem}
-.eb{background:var(--s2);border:1px solid var(--b);color:var(--m);font-size:.8rem;padding:.35rem .8rem;border-radius:4px;cursor:pointer}
-.eb:hover{border-color:var(--gold);color:var(--gold)}
-.spin{display:none;text-align:center;padding:3rem;color:var(--m)}
-.spin.on{display:block}
-@keyframes dots{0%{content:"."}33%{content:".."}66%{content:"..."}}
-.da::after{content:"";animation:dots 1.4s infinite}
-.err{background:#2a1010;border:1px solid #8a3030;border-radius:8px;padding:1rem;color:#e88;margin-bottom:1.5rem;display:none}
-.res{display:none}.res.on{display:block}
-.rh{background:var(--s);border:1px solid var(--b);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1rem}
-.ra{font-size:1.1rem;font-weight:700;margin-bottom:.25rem}
-.rm{color:var(--m);font-size:.82rem}.rm span{margin-right:1rem}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.card{background:var(--s);border:1px solid var(--b);border-radius:10px;padding:1.25rem}
-.ct{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.85rem}
-.pg{display:grid;grid-template-columns:1fr 1fr;gap:.4rem}
-.kv{display:flex;flex-direction:column}
-.k{font-size:.7rem;color:var(--m);text-transform:uppercase;margin-bottom:.1rem}
-.v{font-size:.9rem;font-weight:600}
-.pb{font-size:2rem;font-weight:800;color:var(--gold);line-height:1;margin-bottom:.2rem}
-.sl{margin-top:.75rem}
-.sr{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--b);font-size:.82rem}
-.sr:last-child{border-bottom:none}
-.zp{display:inline-block;padding:.3rem .8rem;border-radius:4px;font-size:.78rem;font-weight:700;text-transform:uppercase;margin-bottom:.75rem}
-.pg-g{background:#0e2a1a;color:#4ade80;border:1px solid #1a5c30}
-.pg-y{background:#2a2200;color:#fbbf24;border:1px solid #5c4a00}
-.pg-r{background:#2a0e0e;color:#f87171;border:1px solid #5c1a1a}
-.pg-x{background:var(--s2);color:var(--m);border:1px solid var(--b)}
-.pd{font-size:.82rem;color:var(--m);line-height:1.5}
-.rr{display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid var(--b);font-size:.85rem}
-.rr:last-child{border-bottom:none}
-.rl{color:#fbbf24;font-size:.78rem;font-weight:600}
-.nr{color:#4ade80}
-.dg{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.25rem}
-.db{width:42px;height:42px;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1rem;font-weight:800}
-.dA{background:#1a4d2e;color:#4ade80}.dB{background:#1e3d18;color:#86efac}
-.dC{background:#2a3d0e;color:#bef264}.dD{background:#3d3200;color:#fde047}
-.dE{background:#3d2200;color:#fb923c}.dF{background:#3d1400;color:#f87171}
-.dG{background:#3d0a0a;color:#ef4444}
-.dc{font-size:.6rem;font-weight:400}
-.cta{background:linear-gradient(135deg,#1a1612,#1e1a0e);border:1px solid #3d3010;border-radius:10px;padding:1.75rem;text-align:center;margin-top:1.5rem}
-.cta h3{font-size:1.1rem;margin-bottom:.5rem}
-.cta p{color:var(--m);font-size:.88rem;margin-bottom:1.25rem}
-.cb{display:inline-block;background:var(--gold);color:#000;padding:.75rem 2rem;border-radius:6px;font-weight:700;font-size:.9rem;text-decoration:none}
-.full{grid-column:1/-1}
-@media(max-width:640px){.grid{grid-template-columns:1fr}h1{font-size:1.5rem}}
-</style></head><body>
-<header><div class="logo">Foncier<span>MCP</span></div><div class="badge">Demo Live</div></header>
-<main>
-<h1>Analysez n'importe quelle adresse<br>en <em>moins de 2 secondes</em></h1>
-<p class="sub">Cadastre · Prix DVF · PLU · Risques · DPE — toutes les donnees officielles francaises agregees pour les professionnels de l'immobilier.</p>
-<div class="sb">
-  <input type="text" id="ai" placeholder="Ex: 12 place Bellecour, 69002 Lyon" onkeydown="if(event.key==='Enter')go()">
-  <button id="btn" onclick="go()">Analyser</button>
+.hero{padding:7rem 0 4rem;background:linear-gradient(160deg,var(--c-bg) 0%,var(--c-bg2) 100%);border-bottom:1px solid var(--c-border)}
+.hero-inner{display:grid;grid-template-columns:1.1fr 0.9fr;gap:5rem;align-items:center}
+.hero-eyebrow{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--c-gold);display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem}
+.hero-eyebrow::before{content:'';width:24px;height:2px;background:var(--c-gold)}
+.hero-desc{font-size:1.05rem;color:var(--c-muted);line-height:1.7;margin-bottom:2.5rem;max-width:48ch}
+.hero-actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:3rem}
+.hero-trust{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:0.5rem;font-size:0.78rem;color:var(--c-muted)}
+.trust-dot{width:6px;height:6px;border-radius:50%;background:var(--c-green)}
+.hero-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden}
+.hero-card-top{background:var(--c-bg2);border-bottom:1px solid var(--c-border);padding:0.7rem 1.25rem;display:flex;align-items:center;gap:0.5rem}
+.hero-card-label{font-family:var(--mono);font-size:0.68rem;color:var(--c-muted);margin:0 auto}
+.hero-search-body{padding:1.5rem}
+.hero-search-bar{display:flex;gap:0.6rem;background:var(--c-bg);border:2px solid var(--c-border);border-radius:var(--radius-lg);padding:0.5rem 0.5rem 0.5rem 1.1rem;transition:border-color 0.2s;margin-bottom:0.85rem}
+.hero-search-bar:focus-within{border-color:var(--c-gold);box-shadow:0 0 0 3px rgba(184,134,11,0.1)}
+.hero-search-bar input{flex:1;background:none;border:none;outline:none;font-family:var(--sans);font-size:0.9rem;color:var(--c-ink)}
+.hero-search-bar input::placeholder{color:var(--c-muted)}
+.hero-search-bar button{background:var(--c-gold);color:white;border:none;border-radius:var(--radius);padding:0.55rem 1.25rem;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:var(--sans);transition:background 0.15s}
+.hero-search-bar button:hover{background:var(--c-gold-light)}
+.hero-search-bar button:disabled{opacity:0.5;cursor:not-allowed}
+.hero-chips{display:flex;gap:0.4rem;flex-wrap:wrap}
+.hero-chip{font-size:0.72rem;background:white;border:1px solid var(--c-border);color:var(--c-ink2);padding:0.25rem 0.75rem;border-radius:20px;cursor:pointer;transition:all 0.15s}
+.hero-chip:hover{border-color:var(--c-gold);color:var(--c-gold);background:var(--c-gold-pale)}
+.stats-bar{background:var(--c-surface);border-bottom:1px solid var(--c-border)}
+.stats-inner{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-item{padding:1.75rem 2rem;border-right:1px solid var(--c-border);text-align:center}
+.stat-item:last-child{border-right:none}
+.stat-val{font-family:var(--serif);font-size:2rem;font-weight:600;color:var(--c-gold);display:block;line-height:1;margin-bottom:0.35rem}
+.stat-label{font-size:0.78rem;color:var(--c-muted);text-transform:uppercase;letter-spacing:0.06em}
+.prob-sol{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.prob-list{list-style:none;display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
+.prob-item{display:flex;align-items:flex-start;gap:1rem;padding:1.1rem 1.25rem;background:var(--c-red-light);border:1px solid rgba(139,32,32,0.15);border-radius:var(--radius)}
+.prob-title{font-weight:600;font-size:0.9rem;margin-bottom:0.2rem}
+.prob-desc{font-size:0.8rem;color:var(--c-muted);line-height:1.5}
+.terminal{background:var(--c-ink);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg)}
+.term-bar{background:#2a2825;padding:0.85rem 1.25rem;display:flex;align-items:center;gap:0.5rem;border-bottom:1px solid rgba(255,255,255,0.07)}
+.sol-dot{width:10px;height:10px;border-radius:50%}
+.sol-dot-r{background:#FF5F57}.sol-dot-y{background:#FFBD2E}.sol-dot-g{background:#28CA41}
+.term-label{font-family:var(--mono);font-size:0.68rem;color:rgba(255,255,255,0.3);margin:0 auto}
+.term-body{padding:1.5rem;font-family:var(--mono);font-size:0.78rem;line-height:2;color:rgba(255,255,255,0.85)}
+.t-prompt{color:#4EC994}.t-section{color:#E87A5C}.t-key{color:#D4A017}.t-val{color:#98C379}.t-num{color:#61AFEF}.t-ok{color:#4EC994}
+.t-cursor{display:inline-block;width:7px;height:13px;background:#D4A017;animation:blink 1s step-end infinite;vertical-align:text-bottom}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.feat-grid-home{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat-card-home{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:1.75rem;transition:all 0.2s;text-decoration:none;display:block;color:inherit}
+.feat-card-home:hover{border-color:var(--c-gold);transform:translateY(-2px)}
+.feat-icon-home{width:44px;height:44px;border-radius:var(--radius);background:var(--c-gold-pale);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1rem}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.how-step-num{width:64px;height:64px;border-radius:50%;background:var(--c-gold-pale);border:2px solid var(--c-gold);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--c-gold);margin:0 auto 1.25rem}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.test-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:1.75rem}
+.test-stars{color:#F59E0B;font-size:0.85rem;letter-spacing:0.15em;margin-bottom:1rem}
+.test-quote{font-family:var(--serif);font-size:0.95rem;font-style:italic;line-height:1.7;color:var(--c-ink2);margin-bottom:1.5rem}
+.test-quote::before{content:'"';color:var(--c-gold);font-size:1.8rem;line-height:0;vertical-align:-0.35em;margin-right:0.15em}
+.demo-section{background:var(--c-bg2);border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border)}
+@media(max-width:900px){.hero-inner,.prob-sol{grid-template-columns:1fr;gap:3rem}.feat-grid-home,.how-steps,.test-grid{grid-template-columns:1fr 1fr}.stats-inner{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.feat-grid-home,.how-steps,.test-grid{grid-template-columns:1fr}}
+</style>
+</head><body><nav class="site-nav"><div class="container"><div class="nav-inner">
+<a href="index.html" class="nav-logo">Foncier<span>MCP</span><span class="badge">v1</span></a>
+<div class="nav-main">
+<div class="nav-item"><a href="fonctionnalites.html" class="nav-link">Fonctionnalités <span class="nav-chevron">▾</span></a><div class="mega-menu"><a href="fonctionnalites.html#cadastre" class="mega-item"><div class="mega-icon">🗺</div><div><div class="mega-text-title">Cadastre IGN</div><div class="mega-text-desc">Références parcellaires</div></div></a><a href="fonctionnalites.html#dvf" class="mega-item"><div class="mega-icon">💶</div><div><div class="mega-text-title">Prix DVF</div><div class="mega-text-desc">Transactions réelles DGFiP</div></div></a><a href="fonctionnalites.html#plu" class="mega-item"><div class="mega-icon">📐</div><div><div class="mega-text-title">PLU &amp; Urbanisme</div><div class="mega-text-desc">Règles de constructibilité</div></div></a><a href="fonctionnalites.html#georisques" class="mega-item"><div class="mega-icon">⚠️</div><div><div class="mega-text-title">Géorisques</div><div class="mega-text-desc">Risques naturels</div></div></a><a href="fonctionnalites.html#dpe" class="mega-item"><div class="mega-icon">🏠</div><div><div class="mega-text-title">DPE ADEME</div><div class="mega-text-desc">Performance énergétique</div></div></a><a href="api.html" class="mega-item"><div class="mega-icon">🔌</div><div><div class="mega-text-title">API &amp; Intégration</div><div class="mega-text-desc">Documentation MCP</div></div></a></div></div>
+<div class="nav-item"><a href="#" class="nav-link">Professionnels <span class="nav-chevron">▾</span></a><div class="mega-menu"><a href="notaires.html" class="mega-item"><div class="mega-icon">⚖️</div><div><div class="mega-text-title">Notaires</div><div class="mega-text-desc">Actes 10× plus vite</div></div></a><a href="agents.html" class="mega-item"><div class="mega-icon">🏢</div><div><div class="mega-text-title">Agents immobiliers</div><div class="mega-text-desc">Argumentaire vendeur</div></div></a><a href="promoteurs.html" class="mega-item"><div class="mega-icon">🏗️</div><div><div class="mega-text-title">Promoteurs</div><div class="mega-text-desc">Faisabilité foncière</div></div></a></div></div>
+<div class="nav-item"><a href="tarifs.html" class="nav-link">Tarifs</a></div>
+<div class="nav-item"><a href="api.html" class="nav-link">API</a></div>
+<div class="nav-item"><a href="#demo" class="nav-link">Démo live</a></div>
 </div>
-<div class="ex">
-  <span style="color:var(--m);font-size:.78rem;align-self:center">Essayez :</span>
-  <button class="eb" onclick="sa('12 place Bellecour, 69002 Lyon')">Place Bellecour</button>
-  <button class="eb" onclick="sa('15 quai Saint-Antoine, 69002 Lyon')">Quai St-Antoine</button>
-  <button class="eb" onclick="sa('8 rue de la Republique, 69002 Lyon')">Rue de la Republique</button>
+<div class="nav-actions"><a href="mailto:contact@fonciermcp.fr" class="btn-nav-login">Connexion</a><a href="tarifs.html" class="btn-nav-cta">Commencer gratuitement</a><button class="nav-mobile-btn">☰</button></div>
+</div></div></nav>
+<div id="cookie-banner"><div class="cookie-text">Cookies essentiels et analytiques anonymisés. <a href="mentions-legales.html#cookies">En savoir plus</a></div><div class="cookie-actions"><button id="cookie-refuse" class="btn-cookie-refuse">Refuser</button><button id="cookie-accept" class="btn-cookie-accept">Accepter</button></div></div>
+<section class="hero"><div class="container"><div class="hero-inner">
+<div>
+<div class="hero-eyebrow">Serveur MCP foncier · France · 100% officiel</div>
+<h1 style="margin-bottom:1.5rem">L'analyse foncière en <em style="color:var(--c-gold);font-style:italic">2 secondes</em>,<br>pas en 2 heures</h1>
+<p class="hero-desc">Connectez votre assistant IA aux données officielles françaises — cadastre, DVF, PLU, géorisques, DPE. Fini les 12 onglets. Un seul outil. Toutes les données.</p>
+<div class="hero-actions"><a href="#demo" class="btn btn-primary btn-lg">Tester gratuitement</a><a href="tarifs.html" class="btn btn-secondary btn-lg">Voir les tarifs</a></div>
+<div class="hero-trust">
+<div class="trust-item"><div class="trust-dot"></div>DGFiP, IGN, BRGM, ADEME</div>
+<div class="trust-item"><div class="trust-dot"></div>Hébergé en France · RGPD</div>
+<div class="trust-item"><div class="trust-dot"></div>Sans engagement</div>
+</div></div>
+<div><div class="hero-card">
+<div class="hero-card-top"><div class="demo-dots"><div class="demo-dot demo-dot-r"></div><div class="demo-dot demo-dot-y"></div><div class="demo-dot demo-dot-g"></div></div><span class="hero-card-label">FoncierMCP · analyse_parcel</span></div>
+<div class="hero-search-body">
+<div class="hero-search-bar"><input id="hero-input" type="text" placeholder="Ex: 15 rue Garibaldi, 69003 Lyon" onkeydown="if(event.key==='Enter')heroSearch()"><button id="hero-btn" onclick="heroSearch()">Analyser →</button></div>
+<div class="hero-chips">
+<button class="hero-chip" onclick="heroSet('15 rue Garibaldi, 69003 Lyon')">Lyon 3e</button>
+<button class="hero-chip" onclick="heroSet('24 quai Saint-Antoine, 69002 Lyon')">Quai St-Antoine</button>
+<button class="hero-chip" onclick="heroSet('45 cours Vitton, 69006 Lyon')">Cours Vitton</button>
 </div>
-<div class="err" id="err"></div>
-<div class="spin" id="spin"><span class="da">Interrogation des APIs officielles</span></div>
-<div class="res" id="res">
-  <div class="rh"><div class="ra" id="raddr"></div><div class="rm"><span id="rcoords"></span><span id="rscore"></span></div></div>
-  <div class="grid">
-    <div class="card"><div class="ct">Cadastre</div><div class="pg" id="cad"></div></div>
-    <div class="card"><div class="ct">PLU — Urbanisme</div><div id="plu"></div></div>
-    <div class="card full"><div class="ct">DVF — Transactions</div><div id="dvf"></div></div>
-    <div class="card"><div class="ct">Georisques</div><div id="risk"></div></div>
-    <div class="card"><div class="ct">DPE</div><div id="dpe"></div></div>
-  </div>
-  <div class="cta"><h3>Integrez FoncierMCP dans votre assistant IA</h3><p>Compatible Claude Desktop — cle API active en 2 minutes.</p><a class="cb" href="mailto:contact@fonciermcp.fr?subject=Cle API">Obtenir ma cle API — 49/mois</a></div>
+<div id="hero-spin" style="display:none;padding:1.5rem;text-align:center"><div class="spinner-ring"></div></div>
+<div id="hero-result"></div>
+</div></div></div>
+</div></div></section>
+<div class="stats-bar"><div class="container"><div class="stats-inner">
+<div class="stat-item"><span class="stat-val">6</span><span class="stat-label">Sources officielles</span></div>
+<div class="stat-item"><span class="stat-val">&lt;2s</span><span class="stat-label">Temps de réponse</span></div>
+<div class="stat-item"><span class="stat-val">100%</span><span class="stat-label">Données publiques</span></div>
+<div class="stat-item"><span class="stat-val">0</span><span class="stat-label">Données stockées</span></div>
+</div></div></div><section class="section"><div class="container"><div class="prob-sol">
+<div class="animate-on-scroll">
+<span class="section-eyebrow">// Le problème</span>
+<h2 class="section-title">45 minutes perdues<br>par dossier</h2>
+<p class="section-desc">6 sites à naviguer, des données à copier-coller, des PDFs à vérifier. Un travail répétitif à fort risque d'erreur.</p>
+<ul class="prob-list">
+<li class="prob-item"><div style="font-size:1.1rem;flex-shrink:0">⏱</div><div><div class="prob-title">6 sites à consulter séparément</div><div class="prob-desc">Cadastre, DVF, GPU, géorisques, DPE — chacun avec sa propre interface</div></div></li>
+<li class="prob-item"><div style="font-size:1.1rem;flex-shrink:0">⚠️</div><div><div class="prob-title">Risque d'oubli et d'erreur</div><div class="prob-desc">Un risque manqué, un PLU mal interprété — la responsabilité est engagée</div></div></li>
+<li class="prob-item"><div style="font-size:1.1rem;flex-shrink:0">📉</div><div><div class="prob-title">Productivité gâchée</div><div class="prob-desc">Vous êtes expert en droit ou en transaction — pas en navigation web</div></div></li>
+</ul></div>
+<div class="animate-on-scroll"><div class="terminal">
+<div class="term-bar"><div class="sol-dot sol-dot-r"></div><div class="sol-dot sol-dot-y"></div><div class="sol-dot sol-dot-g"></div><span class="term-label">FoncierMCP · Claude Desktop</span></div>
+<div class="term-body">
+<div><span class="t-prompt">Vous</span>  Analyse le 15 rue Garibaldi, 69003 Lyon</div>
+<div><span class="t-prompt">Claude</span> Voici l'analyse complète :</div><br>
+<div><span class="t-section">■ CADASTRE</span></div>
+<div><span class="t-key">Parcelle  </span><span class="t-val">69123 AB 0287 · 342 m²</span></div><br>
+<div><span class="t-section">■ URBANISME</span></div>
+<div><span class="t-key">Zone      </span><span class="t-ok">UA — Constructible</span></div><br>
+<div><span class="t-section">■ PRIX MARCHÉ</span></div>
+<div><span class="t-key">Médiane   </span><span class="t-num">5 840 €/m²</span></div>
+<div><span class="t-key">Volume    </span><span class="t-val">12 ventes · rayon 500m</span></div><br>
+<div><span class="t-section">■ RISQUES</span></div>
+<div><span class="t-ok">✓</span><span class="t-val"> Inondation zone B · Séisme zone 2</span></div><br>
+<div><span class="t-prompt">→</span> <span class="t-cursor"></span></div>
+</div></div></div>
+</div></div></section>
+<section class="section" style="background:var(--c-surface);border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border)"><div class="container">
+<div style="text-align:center;margin-bottom:3.5rem" class="animate-on-scroll"><span class="section-eyebrow">// Les outils</span><h2 class="section-title">6 sources officielles, 1 seule requête</h2><p class="section-desc" style="margin:0 auto">Chaque outil interroge une API officielle française en temps réel. Aucune donnée n'est stockée.</p></div>
+<div class="feat-grid-home">
+<a href="fonctionnalites.html#cadastre" class="feat-card-home animate-on-scroll"><div class="feat-icon-home">🗺</div><span style="font-family:var(--mono);font-size:0.62rem;color:var(--c-muted);display:block;margin-bottom:0.5rem">01 / analyze_parcel</span><div style="font-weight:600;margin-bottom:0.5rem">Analyse complète</div><p style="font-size:0.82rem;color:var(--c-muted)">Cadastre + DVF + PLU + risques + DPE en une requête.</p></a>
+<a href="fonctionnalites.html#dvf" class="feat-card-home animate-on-scroll"><div class="feat-icon-home">💶</div><span style="font-family:var(--mono);font-size:0.62rem;color:var(--c-muted);display:block;margin-bottom:0.5rem">02 / get_dvf_history</span><div style="font-weight:600;margin-bottom:0.5rem">Prix de vente réels</div><p style="font-size:0.82rem;color:var(--c-muted)">Certifié DGFiP. Médiane, fourchette, volume.</p></a>
+<a href="fonctionnalites.html#plu" class="feat-card-home animate-on-scroll"><div class="feat-icon-home">📐</div><span style="font-family:var(--mono);font-size:0.62rem;color:var(--c-muted);display:block;margin-bottom:0.5rem">03 / check_plu_rules</span><div style="font-weight:600;margin-bottom:0.5rem">Règles d'urbanisme</div><p style="font-size:0.82rem;color:var(--c-muted)">Zone PLU, constructibilité, lien vers le PDF.</p></a>
+<a href="fonctionnalites.html#georisques" class="feat-card-home animate-on-scroll"><div class="feat-icon-home">⚠️</div><span style="font-family:var(--mono);font-size:0.62rem;color:var(--c-muted);display:block;margin-bottom:0.5rem">04 / get_erp_risks</span><div style="font-weight:600;margin-bottom:0.5rem">Risques naturels</div><p style="font-size:0.82rem;color:var(--c-muted)">Inondation, séisme, radon — équivalent ERP.</p></a>
+<a href="fonctionnalites.html#dpe" class="feat-card-home animate-on-scroll"><div class="feat-icon-home">🏠</div><span style="font-family:var(--mono);font-size:0.62rem;color:var(--c-muted);display:block;margin-bottom:0.5rem">05 / get_dpe</span><div style="font-weight:600;margin-bottom:0.5rem">Performance énergétique</div><p style="font-size:0.82rem;color:var(--c-muted)">DPE A à G dans la commune. Passoires identifiées.</p></a>
+<a href="api.html" class="feat-card-home animate-on-scroll" style="background:var(--c-gold-pale);border-color:rgba(184,134,11,0.3)"><div class="feat-icon-home">🔌</div><span style="font-family:var(--mono);font-size:0.62rem;color:var(--c-muted);display:block;margin-bottom:0.5rem">MCP / API REST</span><div style="font-weight:600;margin-bottom:0.5rem">Claude, ChatGPT, Cursor…</div><p style="font-size:0.82rem;color:var(--c-muted)">Standard MCP Anthropic. Opérationnel en 5 min.</p></a>
+</div></div></section><section class="section demo-section" id="demo"><div class="container"><div style="max-width:900px;margin:0 auto">
+<div style="text-align:center;margin-bottom:2.5rem" class="animate-on-scroll"><span class="section-eyebrow">// Démo live</span><h2 class="section-title">Testez sur une vraie adresse</h2><p class="section-desc" style="margin:0 auto">Les données proviennent des APIs officielles en temps réel. Aucune adresse n'est stockée.</p></div>
+<div class="demo-widget" id="demo-container">
+<div class="demo-toolbar"><div class="demo-dots"><div class="demo-dot demo-dot-r"></div><div class="demo-dot demo-dot-y"></div><div class="demo-dot demo-dot-g"></div></div><span class="demo-toolbar-label">FoncierMCP · analyze_parcel · démo publique</span></div>
+<div class="demo-search-area">
+<div class="demo-search-bar"><input class="demo-search-input" type="text" placeholder="Entrez n'importe quelle adresse française"><button class="demo-search-btn">Analyser</button></div>
+<div class="demo-examples"><span class="demo-examples-label">Exemples :</span>
+<button class="demo-example-chip" data-addr="15 rue Garibaldi, 69003 Lyon">Lyon 3e</button>
+<button class="demo-example-chip" data-addr="24 quai Saint-Antoine, 69002 Lyon">Quai St-Antoine</button>
+<button class="demo-example-chip" data-addr="8 place des Terreaux, 69001 Lyon">Terreaux</button>
+<button class="demo-example-chip" data-addr="45 cours Vitton, 69006 Lyon">Cours Vitton</button>
+<button class="demo-example-chip" data-addr="12 avenue de Saxe, 69006 Lyon">Av. de Saxe</button>
+</div></div>
+<div class="demo-results-area">
+<div class="demo-error"></div>
+<div class="demo-spinner"><div class="demo-spinner-inner"><div class="spinner-ring"></div><div class="spinner-label">Interrogation des APIs officielles…</div></div></div>
+<div class="demo-empty"><div class="demo-empty-icon">🗺</div><div class="demo-empty-title">Analysez n'importe quelle adresse</div><div class="demo-empty-desc">Tapez une adresse française ou cliquez sur un exemple.</div></div>
+<div class="demo-results" style="display:none">
+<div class="result-header"><span class="result-addr"></span><span class="result-meta"></span></div>
+<div class="result-grid">
+<div class="result-card"><div class="result-card-header"><div class="result-card-icon">🗺</div><div class="result-card-title">Cadastre</div><div class="result-card-source">IGN</div></div><div class="res-cadastre"></div></div>
+<div class="result-card"><div class="result-card-header"><div class="result-card-icon">📐</div><div class="result-card-title">PLU</div><div class="result-card-source">GPU</div></div><div class="res-plu"></div></div>
+<div class="result-card result-card-full"><div class="result-card-header"><div class="result-card-icon">💶</div><div class="result-card-title">DVF · Prix réels</div><div class="result-card-source">DGFiP</div></div><div class="res-dvf"></div></div>
+<div class="result-card"><div class="result-card-header"><div class="result-card-icon">⚠️</div><div class="result-card-title">Géorisques</div><div class="result-card-source">BRGM</div></div><div class="res-risks"></div></div>
+<div class="result-card"><div class="result-card-header"><div class="result-card-icon">🏠</div><div class="result-card-title">DPE · Énergie</div><div class="result-card-source">ADEME</div></div><div class="res-dpe"></div></div>
 </div>
-</main>
+<div style="text-align:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--c-border)"><p style="font-size:0.82rem;color:var(--c-muted);margin-bottom:1rem">Voulez-vous intégrer ces données dans votre workflow ?</p><a href="tarifs.html" class="btn btn-primary">Obtenir ma clé API</a></div>
+</div></div></div></div></section>
+<section class="section" style="background:var(--c-surface);border-top:1px solid var(--c-border)"><div class="container">
+<div style="text-align:center;margin-bottom:3.5rem" class="animate-on-scroll"><span class="section-eyebrow">// Témoignages</span><h2 class="section-title">Ils gagnent 40 minutes par dossier</h2></div>
+<div class="test-grid">
+<div class="test-card animate-on-scroll"><div class="test-stars">★★★★★</div><p class="test-quote">J'ai réduit le temps de préparation de mes dossiers de 40 minutes à moins de 5. Pour 15 dossiers par semaine, ça change tout.</p><div style="font-size:0.85rem;font-weight:600">Maître Dupont</div><div style="font-size:0.75rem;color:var(--c-muted);font-family:var(--mono)">Notaire · Lyon 2e</div></div>
+<div class="test-card animate-on-scroll"><div class="test-stars">★★★★★</div><p class="test-quote">Le DVF directement dans Claude, c'est exactement ce qu'il manquait. Je demande le prix médian d'une rue et j'ai la réponse en 2 secondes.</p><div style="font-size:0.85rem;font-weight:600">Sophie M.</div><div style="font-size:0.75rem;color:var(--c-muted);font-family:var(--mono)">Agent immobilier · Bron</div></div>
+<div class="test-card animate-on-scroll"><div class="test-stars">★★★★★</div><p class="test-quote">Croiser PLU + géorisques + DPE en une seule requête représente un gain énorme sur chaque projet de faisabilité.</p><div style="font-size:0.85rem;font-weight:600">Thomas R.</div><div style="font-size:0.75rem;color:var(--c-muted);font-family:var(--mono)">Promoteur · Villeurbanne</div></div>
+</div></div></section>
+<section style="background:var(--c-gold);padding:4rem 0;text-align:center"><div class="container">
+<h2 style="font-family:'Lora',serif;font-size:clamp(1.6rem,3vw,2.5rem);margin-bottom:0.75rem;color:white">Votre IA connaît déjà chaque parcelle de France</h2>
+<p style="color:rgba(255,255,255,0.85);margin-bottom:2rem">Clé API en 2 minutes · Essai gratuit · Sans engagement</p>
+<div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap">
+<a href="tarifs.html" style="background:white;color:var(--c-gold);font-weight:700;padding:0.85rem 2rem;border-radius:var(--radius-lg);font-size:0.95rem;text-decoration:none">Commencer gratuitement</a>
+<a href="api.html" style="background:transparent;color:white;font-weight:600;padding:0.85rem 2rem;border-radius:var(--radius-lg);font-size:0.95rem;text-decoration:none;border:2px solid rgba(255,255,255,0.6)">Voir la documentation</a>
+</div></div></section>
+<footer class="site-footer"><div class="container"><div class="footer-grid">
+<div class="footer-brand"><div style="font-family:'Lora',serif;font-size:1.1rem;font-weight:600;color:white;margin-bottom:1rem">Foncier<span style="color:#D4A017">MCP</span></div><p>L'outil MCP de référence pour les professionnels de l'immobilier.</p></div>
+<div class="footer-col"><h4>Produit</h4><ul class="footer-links"><li><a href="fonctionnalites.html">Fonctionnalités</a></li><li><a href="index.html#demo">Démo live</a></li><li><a href="api.html">API</a></li><li><a href="tarifs.html">Tarifs</a></li></ul></div>
+<div class="footer-col"><h4>Professionnels</h4><ul class="footer-links"><li><a href="notaires.html">Notaires</a></li><li><a href="agents.html">Agents</a></li><li><a href="promoteurs.html">Promoteurs</a></li></ul></div>
+<div class="footer-col"><h4>Légal</h4><ul class="footer-links"><li><a href="mentions-legales.html">Mentions légales</a></li><li><a href="cgu.html">CGU</a></li><li><a href="mentions-legales.html#cookies">Cookies</a></li><li><a href="mailto:contact@fonciermcp.fr">Contact</a></li></ul></div>
+</div><div class="footer-bottom"><div>© 2026 Kayzen Lyon — FoncierMCP.</div><div class="footer-legal"><a href="mentions-legales.html">Mentions légales</a><a href="cgu.html">CGU</a></div></div></div></footer>
+<script src="assets/app.js"></script>
 <script>
-function sa(a){document.getElementById("ai").value=a;go()}
-function fmt(n){return n?Number(n).toLocaleString("fr-FR")+" ":"—"}
-function fmtm(n){return n?Number(n).toLocaleString("fr-FR")+" /m2":"—"}
-async function go(){
-  const a=document.getElementById("ai").value.trim();if(!a)return;
-  const btn=document.getElementById("btn");
-  btn.disabled=true;
-  document.getElementById("spin").classList.add("on");
-  document.getElementById("res").classList.remove("on");
-  document.getElementById("err").style.display="none";
+const API='https://app-production-71c1.up.railway.app';
+function heroSet(a){document.getElementById('hero-input').value=a;heroSearch();}
+async function heroSearch(){
+  const inp=document.getElementById('hero-input'),btn=document.getElementById('hero-btn'),spin=document.getElementById('hero-spin'),res=document.getElementById('hero-result');
+  const addr=inp.value.trim();if(addr.length<5)return;
+  btn.disabled=true;spin.style.display='block';res.innerHTML='';
   try{
-    const r=await fetch("/api/demo",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({address:a})});
+    const r=await fetch(API+'/api/demo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address:addr})});
     const d=await r.json();
-    if(!d.success){document.getElementById("err").textContent=d.error||"Adresse introuvable";document.getElementById("err").style.display="block";return}
-    render(d);document.getElementById("res").classList.add("on");
-  }catch(e){document.getElementById("err").textContent="Erreur de connexion";document.getElementById("err").style.display="block"}
-  finally{btn.disabled=false;document.getElementById("spin").classList.remove("on")}
+    if(!d.success){res.innerHTML='<div style="color:var(--c-muted);font-size:0.82rem;padding:0.5rem 0">'+(d.error||'Adresse introuvable')+'</div>';return;}
+    const st=d.dvf?.stats||{},cs=d.plu?.constructibilite||{},nb=d.risks?.nb_risques||0;
+    res.innerHTML='<div style="margin-top:1rem;border-top:1px solid var(--c-border);padding-top:1rem"><div style="font-size:0.8rem;font-weight:600;color:var(--c-ink);margin-bottom:0.6rem">'+d.address+'</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem"><div style="background:var(--c-bg);border:1px solid var(--c-border);border-radius:6px;padding:0.5rem;text-align:center"><div style="font-size:0.75rem;color:var(--c-gold);font-weight:700">'+(st.prix_m2_median?st.prix_m2_median.toLocaleString("fr-FR")+" €/m²":"--")+'</div><div style="font-size:0.6rem;color:var(--c-muted);text-transform:uppercase">DVF médiane</div></div><div style="background:var(--c-bg);border:1px solid var(--c-border);border-radius:6px;padding:0.5rem;text-align:center"><div style="font-size:0.75rem;font-weight:700;color:'+(cs.statut==='Constructible'?'var(--c-green)':'var(--c-red)')+'">'+( cs.statut||"--")+'</div><div style="font-size:0.6rem;color:var(--c-muted);text-transform:uppercase">PLU</div></div><div style="background:var(--c-bg);border:1px solid var(--c-border);border-radius:6px;padding:0.5rem;text-align:center"><div style="font-size:0.75rem;font-weight:700;color:'+(nb>0?'var(--c-gold)':'var(--c-green)')+'">'+(nb>0?nb+' risque'+(nb>1?'s':''):'✓ OK')+'</div><div style="font-size:0.6rem;color:var(--c-muted);text-transform:uppercase">Géorisques</div></div></div><a href="#demo" style="display:block;text-align:center;margin-top:0.75rem;font-size:0.78rem;color:var(--c-gold);font-weight:600">Voir l\'analyse complète →</a></div>';
+  }catch(e){res.innerHTML='<div style="color:var(--c-muted);font-size:0.8rem;padding:0.5rem 0">Connexion impossible.</div>';}
+  finally{btn.disabled=false;spin.style.display='none';}
 }
-function render(d){
-  document.getElementById("raddr").textContent=d.address||"—";
-  const c=d.coordinates||{};
-  document.getElementById("rcoords").textContent=c.lat?c.lat.toFixed(5)+", "+c.lon.toFixed(5):"";
-  document.getElementById("rscore").textContent=d.geocoding_score?"Confiance : "+Math.round(d.geocoding_score*100)+"%":"";
-  const p=d.cadastre||{};
-  document.getElementById("cad").innerHTML=p.parcel_id?
-    "<div class=kv><div class=k>Reference</div><div class=v>"+p.parcel_id+"</div></div><div class=kv><div class=k>Section</div><div class=v>"+(p.section||"—")+" "+(p.numero||"")+"</div></div><div class=kv><div class=k>Surface</div><div class=v>"+(p.surface_m2?p.surface_m2.toLocaleString("fr-FR")+" m2":"—")+"</div></div><div class=kv><div class=k>Commune</div><div class=v>"+(p.commune||d.city||"—")+"</div></div>"
-    :"<div style=color:var(--m)>Parcelle non trouvee.</div>";
-  const pl=d.plu||{},cs=pl.constructibilite||{};
-  const pc={"Constructible":"pg-g","Non constructible":"pg-r","Tres limite":"pg-r","Constructible sous conditions":"pg-y"}[cs.statut]||"pg-x";
-  document.getElementById("plu").innerHTML="<div class='zp "+pc+"'>"+(cs.statut||"Inconnu")+"</div><div class=pd>"+(cs.detail||"")+"</div>"+(pl.document_urbanisme?.commune?"<div style='margin-top:.5rem;font-size:.75rem;color:var(--m)'>"+pl.document_urbanisme.type_doc+" · "+pl.document_urbanisme.commune+"</div>":"");
-  const dv=d.dvf||{},st=dv.stats||{};
-  document.getElementById("dvf").innerHTML=st.prix_m2_median?
-    "<div style='display:flex;gap:2rem;align-items:flex-end;margin-bottom:.75rem;flex-wrap:wrap'><div><div class=pb>"+fmtm(st.prix_m2_median)+"</div><div style='color:var(--m);font-size:.75rem'>Mediane "+dv.radius_m+"m</div></div><div style='display:flex;gap:1.5rem'><div class=kv><div class=k>Moyen</div><div class=v>"+fmtm(st.prix_m2_moyen)+"</div></div><div class=kv><div class=k>Min</div><div class=v>"+fmtm(st.prix_m2_min)+"</div></div><div class=kv><div class=k>Max</div><div class=v>"+fmtm(st.prix_m2_max)+"</div></div><div class=kv><div class=k>Transactions</div><div class=v>"+st.nb_transactions+"</div></div></div></div><div class=sl>"+(dv.ventes||[]).slice(0,5).map(v=>"<div class=sr><span>"+(v.date||"").substring(0,7)+"</span><span style=color:var(--m)>"+(v.type||"")+(v.surface_m2?" · "+v.surface_m2+"m2":"")+"</span><span>"+fmt(v.prix_total)+(v.prix_m2?" ("+fmtm(v.prix_m2)+")":"")+"</span></div>").join("")+"</div>"
-    :"<div style=color:var(--m)>Aucune transaction trouvee.</div>";
-  const rk=d.risks||{},rl=rk.risques||[];
-  document.getElementById("risk").innerHTML=rl.length?
-    "<div style='color:var(--m);font-size:.8rem;margin-bottom:.5rem'>"+rk.synthese+"</div>"+rl.map(r=>"<div class=rr><span>"+r.type+"</span><span class=rl>"+r.niveau+"</span></div>").join("")
-    :"<div class=nr>✓ Aucun risque majeur identifie</div>";
-  const dp=d.dpe||{},se=dp.stats_etiquettes||{};
-  document.getElementById("dpe").innerHTML=Object.keys(se).length?
-    "<div style='color:var(--m);font-size:.8rem;margin-bottom:.75rem'>"+(dp.nb||0)+" DPE dans la commune</div><div class=dg>"+["A","B","C","D","E","F","G"].filter(e=>se[e]).map(e=>"<div class='db d"+e+"'>"+ e+"<div class=dc>"+se[e]+"</div></div>").join("")+"</div>"
-    :"<div style=color:var(--m)>Aucun DPE trouve.</div>";
-}
-</script></body></html>
+</script>
+</body></html>
