@@ -1,0 +1,33 @@
+services:
+  mcp:
+    build: .
+    ports:
+      - "${MCP_PORT:-8000}:8000"
+    environment:
+      MCP_HOST: "0.0.0.0"
+      MCP_PORT: "8000"
+      LOG_LEVEL: "${LOG_LEVEL:-INFO}"
+      DATABASE_URL: "postgresql://fonciermcp:${POSTGRES_PASSWORD:-secret}@db:5432/fonciermcp"
+      STRIPE_SECRET_KEY: "${STRIPE_SECRET_KEY:-}"
+      STRIPE_WEBHOOK_SECRET: "${STRIPE_WEBHOOK_SECRET:-}"
+      ADMIN_SECRET: "${ADMIN_SECRET:-changeme}"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: fonciermcp
+      POSTGRES_USER: fonciermcp
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-secret}"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fonciermcp"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+volumes:
+  pgdata:
