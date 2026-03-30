@@ -5,11 +5,27 @@ from helpers.http_client import fetch_json
 logger = logging.getLogger(__name__)
 GEO_API = "https://georisques.gouv.fr/api/v1"
 
+RISQUES_LABELS = {
+    "11": "Inondation",
+    "112": "Crue a debordement lent",
+    "113": "Crue torrentielle",
+    "116": "Remontee de nappes",
+    "13": "Seisme",
+    "14": "Mouvement de terrain",
+    "15": "Retrait-gonflement argiles",
+    "16": "Avalanche",
+    "17": "Feu de foret",
+    "18": "Eruption volcanique",
+    "19": "Phenomene meteorologique",
+    "2": "Risque technologique",
+    "3": "Risque nucleaire",
+}
+
 async def get_erp_risks(address: str) -> dict:
     """Risques naturels et technologiques pour une adresse (georisques.gouv.fr).
     Args:
         address: Adresse complete
-    Returns: Liste des risques avec niveau et source.
+    Returns: Liste des risques identifies avec source officielle.
     """
     geo = await geocode_address(address)
     if not geo:
@@ -17,15 +33,28 @@ async def get_erp_risks(address: str) -> dict:
     return await _risks(geo["lat"], geo["lon"])
 
 async def _risks(lat: float, lon: float) -> dict:
-    data = await fetch_json(f"{GEO_API}/resultats_rapport_risques", {"latlon": f"{lon},{lat}"})
-    if not data:
-        return {"risques": [], "synthese": "Donnees indisponibles", "nb_risques": 0}
+    data = await fetch_json(
+        f"{GEO_API}/gaspar/risques",
+        {"rayon": 500, "latlon": f"{lon},{lat}"}
+    )
+    if not data or not data.get("data"):
+        return {"risques": [], "synthese": "Aucune donnee disponible", "nb_risques": 0}
+
     risques = []
-    for key, label in [("inondation","Inondation"),("mvt_terrain","Mouvement de terrain"),("argile","Retrait-gonflement des argiles")]:
-        if data.get(key, {}).get("exposed"):
-            risques.append({"type": label, "niveau": data[key].get("level","Present"), "detail": data[key].get("description","")})
-    if data.get("seisme"):
-        risques.append({"type": "Seisme", "niveau": f"Zone {data['seisme'].get('zone')}", "detail": "Zonage sismique reglementaire"})
-    if data.get("radon"):
-        risques.append({"type": "Radon", "niveau": f"Categorie {data['radon'].get('category')}", "detail": "Potentiel radon du sous-sol"})
-    return {"risques": risques, "nb_risques": len(risques), "synthese": "Aucun risque majeur" if not risques else f"{len(risques)} risque(s)", "source": "Georisques - BRGM / MTE"}
+    seen = set()
+    for entry in data["data"]:
+        for r in entry.get("risques_detail", []):
+            label = r.get("libelle_risque_long") or RISQUES_LABELS.get(str(r.get("num_risque","")), "Risque inconnu")
+            if label not in seen:
+                seen.add(label)
+                risques.append({
+                    "type": label,
+                    "code": str(r.get("num_risque", "")),
+                })
+
+    return {
+        "risques": risques[:10],
+        "nb_risques": len(risques),
+        "synthese": "Aucun risque identifie" if not risques else f"{len(risques)} risque(s) identifies",
+        "source": "Georisques — BRGM / Ministere de la Transition Ecologique",
+    }
