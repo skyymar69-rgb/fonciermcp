@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FoncierMCP — Analyse fonciere IA</title>
+<style>
+:root{--bg:#0f0e0c;--s:#1a1814;--s2:#242018;--b:#2e2b24;--gold:#c9960c;--g2:#e8b020;--t:#e8e0d0;--m:#7a7060}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:-apple-system,sans-serif;min-height:100vh}
+header{border-bottom:1px solid var(--b);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:var(--s)}
+.logo{font-size:1.1rem;font-weight:700}.logo span{color:var(--gold)}
+.badge{background:var(--gold);color:#000;font-size:.65rem;font-weight:700;padding:.2rem .6rem;border-radius:2px;text-transform:uppercase}
+main{max-width:900px;margin:0 auto;padding:3rem 2rem}
+h1{font-size:2rem;font-weight:700;line-height:1.2;margin-bottom:.5rem}
+h1 em{color:var(--gold);font-style:normal}
+.sub{color:var(--m);margin-bottom:2.5rem;line-height:1.6}
+.sb{display:flex;gap:.75rem;margin-bottom:1.5rem;background:var(--s);border:1px solid var(--b);border-radius:8px;padding:.75rem}
+.sb input{flex:1;background:transparent;border:none;outline:none;color:var(--t);font-size:1rem;padding:.25rem .5rem}
+.sb input::placeholder{color:var(--m)}
+.sb button{background:var(--gold);color:#000;border:none;border-radius:5px;padding:.6rem 1.4rem;font-size:.9rem;font-weight:700;cursor:pointer}
+.sb button:disabled{opacity:.5;cursor:not-allowed}
+.ex{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.eb{background:var(--s2);border:1px solid var(--b);color:var(--m);font-size:.8rem;padding:.35rem .8rem;border-radius:4px;cursor:pointer}
+.eb:hover{border-color:var(--gold);color:var(--gold)}
+.spin{display:none;text-align:center;padding:3rem;color:var(--m)}
+.spin.on{display:block}
+@keyframes dots{0%{content:"."}33%{content:".."}66%{content:"..."}}
+.da::after{content:"";animation:dots 1.4s infinite}
+.err{background:#2a1010;border:1px solid #8a3030;border-radius:8px;padding:1rem;color:#e88;margin-bottom:1.5rem;display:none}
+.res{display:none}.res.on{display:block}
+.rh{background:var(--s);border:1px solid var(--b);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1rem}
+.ra{font-size:1.1rem;font-weight:700;margin-bottom:.25rem}
+.rm{color:var(--m);font-size:.82rem}.rm span{margin-right:1rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.card{background:var(--s);border:1px solid var(--b);border-radius:10px;padding:1.25rem}
+.ct{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.85rem}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:.4rem}
+.kv{display:flex;flex-direction:column}
+.k{font-size:.7rem;color:var(--m);text-transform:uppercase;margin-bottom:.1rem}
+.v{font-size:.9rem;font-weight:600}
+.pb{font-size:2rem;font-weight:800;color:var(--gold);line-height:1;margin-bottom:.2rem}
+.sl{margin-top:.75rem}
+.sr{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--b);font-size:.82rem}
+.sr:last-child{border-bottom:none}
+.zp{display:inline-block;padding:.3rem .8rem;border-radius:4px;font-size:.78rem;font-weight:700;text-transform:uppercase;margin-bottom:.75rem}
+.pg-g{background:#0e2a1a;color:#4ade80;border:1px solid #1a5c30}
+.pg-y{background:#2a2200;color:#fbbf24;border:1px solid #5c4a00}
+.pg-r{background:#2a0e0e;color:#f87171;border:1px solid #5c1a1a}
+.pg-x{background:var(--s2);color:var(--m);border:1px solid var(--b)}
+.pd{font-size:.82rem;color:var(--m);line-height:1.5}
+.rr{display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid var(--b);font-size:.85rem}
+.rr:last-child{border-bottom:none}
+.rl{color:#fbbf24;font-size:.78rem;font-weight:600}
+.nr{color:#4ade80}
+.dg{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.25rem}
+.db{width:42px;height:42px;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1rem;font-weight:800}
+.dA{background:#1a4d2e;color:#4ade80}.dB{background:#1e3d18;color:#86efac}
+.dC{background:#2a3d0e;color:#bef264}.dD{background:#3d3200;color:#fde047}
+.dE{background:#3d2200;color:#fb923c}.dF{background:#3d1400;color:#f87171}
+.dG{background:#3d0a0a;color:#ef4444}
+.dc{font-size:.6rem;font-weight:400}
+.cta{background:linear-gradient(135deg,#1a1612,#1e1a0e);border:1px solid #3d3010;border-radius:10px;padding:1.75rem;text-align:center;margin-top:1.5rem}
+.cta h3{font-size:1.1rem;margin-bottom:.5rem}
+.cta p{color:var(--m);font-size:.88rem;margin-bottom:1.25rem}
+.cb{display:inline-block;background:var(--gold);color:#000;padding:.75rem 2rem;border-radius:6px;font-weight:700;font-size:.9rem;text-decoration:none}
+.full{grid-column:1/-1}
+@media(max-width:640px){.grid{grid-template-columns:1fr}h1{font-size:1.5rem}}
+</style></head><body>
+<header><div class="logo">Foncier<span>MCP</span></div><div class="badge">Demo Live</div></header>
+<main>
+<h1>Analysez n'importe quelle adresse<br>en <em>moins de 2 secondes</em></h1>
+<p class="sub">Cadastre · Prix DVF · PLU · Risques · DPE — toutes les donnees officielles francaises agregees pour les professionnels de l'immobilier.</p>
+<div class="sb">
+  <input type="text" id="ai" placeholder="Ex: 12 place Bellecour, 69002 Lyon" onkeydown="if(event.key==='Enter')go()">
+  <button id="btn" onclick="go()">Analyser</button>
+</div>
+<div class="ex">
+  <span style="color:var(--m);font-size:.78rem;align-self:center">Essayez :</span>
+  <button class="eb" onclick="sa('12 place Bellecour, 69002 Lyon')">Place Bellecour</button>
+  <button class="eb" onclick="sa('15 quai Saint-Antoine, 69002 Lyon')">Quai St-Antoine</button>
+  <button class="eb" onclick="sa('8 rue de la Republique, 69002 Lyon')">Rue de la Republique</button>
+</div>
+<div class="err" id="err"></div>
+<div class="spin" id="spin"><span class="da">Interrogation des APIs officielles</span></div>
+<div class="res" id="res">
+  <div class="rh"><div class="ra" id="raddr"></div><div class="rm"><span id="rcoords"></span><span id="rscore"></span></div></div>
+  <div class="grid">
+    <div class="card"><div class="ct">Cadastre</div><div class="pg" id="cad"></div></div>
+    <div class="card"><div class="ct">PLU — Urbanisme</div><div id="plu"></div></div>
+    <div class="card full"><div class="ct">DVF — Transactions</div><div id="dvf"></div></div>
+    <div class="card"><div class="ct">Georisques</div><div id="risk"></div></div>
+    <div class="card"><div class="ct">DPE</div><div id="dpe"></div></div>
+  </div>
+  <div class="cta"><h3>Integrez FoncierMCP dans votre assistant IA</h3><p>Compatible Claude Desktop — cle API active en 2 minutes.</p><a class="cb" href="mailto:contact@fonciermcp.fr?subject=Cle API">Obtenir ma cle API — 49/mois</a></div>
+</div>
+</main>
+<script>
+function sa(a){document.getElementById("ai").value=a;go()}
+function fmt(n){return n?Number(n).toLocaleString("fr-FR")+" ":"—"}
+function fmtm(n){return n?Number(n).toLocaleString("fr-FR")+" /m2":"—"}
+async function go(){
+  const a=document.getElementById("ai").value.trim();if(!a)return;
+  const btn=document.getElementById("btn");
+  btn.disabled=true;
+  document.getElementById("spin").classList.add("on");
+  document.getElementById("res").classList.remove("on");
+  document.getElementById("err").style.display="none";
+  try{
+    const r=await fetch("/api/demo",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({address:a})});
+    const d=await r.json();
+    if(!d.success){document.getElementById("err").textContent=d.error||"Adresse introuvable";document.getElementById("err").style.display="block";return}
+    render(d);document.getElementById("res").classList.add("on");
+  }catch(e){document.getElementById("err").textContent="Erreur de connexion";document.getElementById("err").style.display="block"}
+  finally{btn.disabled=false;document.getElementById("spin").classList.remove("on")}
+}
+function render(d){
+  document.getElementById("raddr").textContent=d.address||"—";
+  const c=d.coordinates||{};
+  document.getElementById("rcoords").textContent=c.lat?c.lat.toFixed(5)+", "+c.lon.toFixed(5):"";
+  document.getElementById("rscore").textContent=d.geocoding_score?"Confiance : "+Math.round(d.geocoding_score*100)+"%":"";
+  const p=d.cadastre||{};
+  document.getElementById("cad").innerHTML=p.parcel_id?
+    "<div class=kv><div class=k>Reference</div><div class=v>"+p.parcel_id+"</div></div><div class=kv><div class=k>Section</div><div class=v>"+(p.section||"—")+" "+(p.numero||"")+"</div></div><div class=kv><div class=k>Surface</div><div class=v>"+(p.surface_m2?p.surface_m2.toLocaleString("fr-FR")+" m2":"—")+"</div></div><div class=kv><div class=k>Commune</div><div class=v>"+(p.commune||d.city||"—")+"</div></div>"
+    :"<div style=color:var(--m)>Parcelle non trouvee.</div>";
+  const pl=d.plu||{},cs=pl.constructibilite||{};
+  const pc={"Constructible":"pg-g","Non constructible":"pg-r","Tres limite":"pg-r","Constructible sous conditions":"pg-y"}[cs.statut]||"pg-x";
+  document.getElementById("plu").innerHTML="<div class='zp "+pc+"'>"+(cs.statut||"Inconnu")+"</div><div class=pd>"+(cs.detail||"")+"</div>"+(pl.document_urbanisme?.commune?"<div style='margin-top:.5rem;font-size:.75rem;color:var(--m)'>"+pl.document_urbanisme.type_doc+" · "+pl.document_urbanisme.commune+"</div>":"");
+  const dv=d.dvf||{},st=dv.stats||{};
+  document.getElementById("dvf").innerHTML=st.prix_m2_median?
+    "<div style='display:flex;gap:2rem;align-items:flex-end;margin-bottom:.75rem;flex-wrap:wrap'><div><div class=pb>"+fmtm(st.prix_m2_median)+"</div><div style='color:var(--m);font-size:.75rem'>Mediane "+dv.radius_m+"m</div></div><div style='display:flex;gap:1.5rem'><div class=kv><div class=k>Moyen</div><div class=v>"+fmtm(st.prix_m2_moyen)+"</div></div><div class=kv><div class=k>Min</div><div class=v>"+fmtm(st.prix_m2_min)+"</div></div><div class=kv><div class=k>Max</div><div class=v>"+fmtm(st.prix_m2_max)+"</div></div><div class=kv><div class=k>Transactions</div><div class=v>"+st.nb_transactions+"</div></div></div></div><div class=sl>"+(dv.ventes||[]).slice(0,5).map(v=>"<div class=sr><span>"+(v.date||"").substring(0,7)+"</span><span style=color:var(--m)>"+(v.type||"")+(v.surface_m2?" · "+v.surface_m2+"m2":"")+"</span><span>"+fmt(v.prix_total)+(v.prix_m2?" ("+fmtm(v.prix_m2)+")":"")+"</span></div>").join("")+"</div>"
+    :"<div style=color:var(--m)>Aucune transaction trouvee.</div>";
+  const rk=d.risks||{},rl=rk.risques||[];
+  document.getElementById("risk").innerHTML=rl.length?
+    "<div style='color:var(--m);font-size:.8rem;margin-bottom:.5rem'>"+rk.synthese+"</div>"+rl.map(r=>"<div class=rr><span>"+r.type+"</span><span class=rl>"+r.niveau+"</span></div>").join("")
+    :"<div class=nr>✓ Aucun risque majeur identifie</div>";
+  const dp=d.dpe||{},se=dp.stats_etiquettes||{};
+  document.getElementById("dpe").innerHTML=Object.keys(se).length?
+    "<div style='color:var(--m);font-size:.8rem;margin-bottom:.75rem'>"+(dp.nb||0)+" DPE dans la commune</div><div class=dg>"+["A","B","C","D","E","F","G"].filter(e=>se[e]).map(e=>"<div class='db d"+e+"'>"+ e+"<div class=dc>"+se[e]+"</div></div>").join("")+"</div>"
+    :"<div style=color:var(--m)>Aucun DPE trouve.</div>";
+}
+</script></body></html>
