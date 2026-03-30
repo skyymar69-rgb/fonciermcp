@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API &amp; Documentation — FoncierMCP</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>.page-hero{padding:7rem 0 4rem;background:var(--c-ink);color:white;border-bottom:1px solid rgba(255,255,255,0.1)}.page-hero h1{color:white;margin-bottom:1rem}.page-hero p{color:rgba(255,255,255,0.7)}.page-hero .section-eyebrow{color:#D4A017}.api-grid{display:grid;grid-template-columns:220px 1fr;gap:3rem;align-items:start}.api-sidebar{position:sticky;top:84px}.api-nav{list-style:none;display:flex;flex-direction:column;gap:0;background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-lg);overflow:hidden}.api-nav-item a{display:block;padding:0.75rem 1.25rem;font-size:0.85rem;color:var(--c-ink2);border-bottom:1px solid var(--c-border);transition:all 0.15s}.api-nav-item:last-child a{border-bottom:none}.api-nav-item a:hover,.api-nav-item a.active{background:var(--c-gold-pale);color:var(--c-gold);font-weight:600}.api-section{padding:3rem 0;border-bottom:1px solid var(--c-border);scroll-margin-top:90px}.api-section:last-child{border-bottom:none}.api-section h2{font-family:var(--sans);font-size:1.3rem;font-weight:700;margin-bottom:1.25rem}.api-section h3{font-family:var(--sans);font-size:1rem;font-weight:600;margin:1.5rem 0 0.75rem;color:var(--c-ink2)}.api-section p{font-size:0.9rem;color:var(--c-muted);line-height:1.7;margin-bottom:0.75rem}.code-block{background:var(--c-ink);border-radius:var(--radius);padding:1.25rem 1.5rem;margin:1rem 0;overflow-x:auto;position:relative}.code-block pre{font-family:var(--mono);font-size:0.78rem;line-height:1.8;color:#abb2bf;margin:0}.cb-lang{position:absolute;top:0.75rem;right:1rem;font-family:var(--mono);font-size:0.62rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em}.code-inline{font-family:var(--mono);font-size:0.82rem;background:var(--c-bg2);padding:0.15rem 0.5rem;border-radius:4px;color:var(--c-ink)}.kw{color:#c678dd}.str{color:#98c379}.num{color:#d19a66}.fn{color:#61afef}.key{color:#e06c75}.ok{color:#56b6c2}.tool-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.25rem}.tool-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem}.tool-name{font-family:var(--mono);font-size:0.88rem;font-weight:500}.tool-method{font-family:var(--mono);font-size:0.65rem;background:var(--c-green-light);color:var(--c-green);padding:0.2rem 0.6rem;border-radius:4px;font-weight:600}.tool-desc{font-size:0.85rem;color:var(--c-muted);margin-bottom:1rem;line-height:1.6}.param-table{width:100%;border-collapse:collapse;font-size:0.82rem}.param-table th{text-align:left;padding:0.5rem 0.75rem;background:var(--c-bg2);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--c-muted);font-weight:600}.param-table td{padding:0.6rem 0.75rem;border-bottom:1px solid var(--c-border);vertical-align:top}.param-table tr:last-child td{border-bottom:none}.param-name{font-family:var(--mono);font-size:0.78rem;color:var(--c-ink)}.param-req{font-family:var(--mono);font-size:0.65rem;background:var(--c-red-light);color:var(--c-red);padding:0.1rem 0.4rem;border-radius:3px}.param-opt{font-family:var(--mono);font-size:0.65rem;background:var(--c-bg3);color:var(--c-muted);padding:0.1rem 0.4rem;border-radius:3px}.step-install{display:flex;flex-direction:column;gap:1rem}.install-step{display:grid;grid-template-columns:32px 1fr;gap:1rem;align-items:start;padding:1.25rem;background:var(--c-bg);border:1px solid var(--c-border);border-radius:var(--radius)}.install-num{width:32px;height:32px;border-radius:50%;background:var(--c-gold);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0}.install-title{font-weight:600;font-size:0.9rem;margin-bottom:0.35rem}.install-desc{font-size:0.82rem;color:var(--c-muted);line-height:1.5}.compat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.compat-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius);padding:1.25rem;text-align:center}.compat-icon{font-size:2rem;margin-bottom:0.75rem}.compat-name{font-weight:600;font-size:0.9rem;margin-bottom:0.25rem}@media(max-width:800px){.api-grid{grid-template-columns:1fr}.api-sidebar{display:none}.compat-grid{grid-template-columns:1fr 1fr}}</style>
+</head><body>
+<nav class="site-nav"><div class="container"><div class="nav-inner">
+<a href="index.html" class="nav-logo">Foncier<span>MCP</span><span class="badge">v1</span></a>
+<div class="nav-main">
+<div class="nav-item"><a href="fonctionnalites.html" class="nav-link">Fonctionnalités <span class="nav-chevron">▾</span></a><div class="mega-menu"><a href="fonctionnalites.html#dvf" class="mega-item"><div class="mega-icon">💶</div><div><div class="mega-text-title">Prix DVF</div></div></a><a href="fonctionnalites.html#plu" class="mega-item"><div class="mega-icon">📐</div><div><div class="mega-text-title">PLU</div></div></a><a href="fonctionnalites.html#georisques" class="mega-item"><div class="mega-icon">⚠️</div><div><div class="mega-text-title">Géorisques</div></div></a></div></div>
+<div class="nav-item"><a href="#" class="nav-link">Professionnels <span class="nav-chevron">▾</span></a><div class="mega-menu"><a href="notaires.html" class="mega-item"><div class="mega-icon">⚖️</div><div><div class="mega-text-title">Notaires</div></div></a><a href="agents.html" class="mega-item"><div class="mega-icon">🏢</div><div><div class="mega-text-title">Agents</div></div></a></div></div>
+<div class="nav-item"><a href="tarifs.html" class="nav-link">Tarifs</a></div>
+<div class="nav-item"><a href="api.html" class="nav-link active">API</a></div>
+</div>
+<div class="nav-actions"><a href="mailto:contact@fonciermcp.fr" class="btn-nav-login">Contact</a><a href="tarifs.html" class="btn-nav-cta">Obtenir une clé</a><button class="nav-mobile-btn">☰</button></div>
+</div></div></nav>
+<div id="cookie-banner"><div class="cookie-text">Cookies essentiels. <a href="mentions-legales.html#cookies">En savoir plus</a></div><div class="cookie-actions"><button id="cookie-refuse" class="btn-cookie-refuse">Refuser</button><button id="cookie-accept" class="btn-cookie-accept">Accepter</button></div></div>
+<section class="page-hero"><div class="container">
+<span class="section-eyebrow">// Documentation</span>
+<h1>API &amp; Intégration MCP</h1>
+<p style="font-size:1.05rem;max-width:55ch;line-height:1.7">FoncierMCP implémente le protocole MCP d'Anthropic. Compatible Claude Desktop, Cursor, VS Code et tout client MCP.</p>
+<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem">
+<a href="tarifs.html" class="btn btn-primary">Obtenir une clé API</a>
+<a href="#quickstart" style="background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2);padding:0.75rem 1.75rem;border-radius:var(--radius);font-weight:600;font-size:0.9rem;text-decoration:none">Guide rapide ↓</a>
+</div>
+</div></section><section class="section"><div class="container"><div class="api-grid">
+<div class="api-sidebar"><ul class="api-nav"><li class="api-nav-item"><a href="#quickstart" class="active">Démarrage rapide</a></li><li class="api-nav-item"><a href="#compatibilite">Compatibilité</a></li><li class="api-nav-item"><a href="#auth">Authentification</a></li><li class="api-nav-item"><a href="#outils">Référence outils</a></li><li class="api-nav-item"><a href="#erreurs">Codes d'erreur</a></li><li class="api-nav-item"><a href="#exemples">Exemples</a></li></ul>
+<div style="margin-top:1.25rem;padding:1rem;background:var(--c-gold-pale);border:1px solid rgba(184,134,11,0.2);border-radius:var(--radius);font-size:0.8rem;color:var(--c-ink2)"><div style="font-weight:600;margin-bottom:0.35rem">Besoin d'aide ?</div><a href="mailto:contact@fonciermcp.fr" style="color:var(--c-gold)">contact@fonciermcp.fr</a></div></div>
+<div>
+<div class="api-section" id="quickstart"><h2>⚡ Démarrage rapide — Claude Desktop</h2>
+<div class="step-install">
+<div class="install-step"><div class="install-num">1</div><div><div class="install-title">Obtenez votre clé API</div><div class="install-desc">Abonnez-vous sur <a href="tarifs.html" style="color:var(--c-gold)">fonciermcp.fr/tarifs</a>. Clé envoyée par email en &lt;2 minutes.</div></div></div>
+<div class="install-step"><div class="install-num">2</div><div><div class="install-title">Ouvrez la config Claude Desktop</div><div class="install-desc">Menu <code class="code-inline">Claude → Settings → Developer → Edit Config</code>. S'ouvre le fichier <code class="code-inline">claude_desktop_config.json</code>.</div></div></div>
+<div class="install-step"><div class="install-num">3</div><div><div class="install-title">Ajoutez FoncierMCP</div><div class="install-desc">Copiez ce bloc dans la section <code class="code-inline">mcpServers</code> :</div></div></div>
+</div>
+<div class="code-block"><span class="cb-lang">json</span><pre>{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"fonciermcp"</span>: {
+      <span class="key">"command"</span>: <span class="str">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@fonciermcp/client"</span>],
+      <span class="key">"env"</span>: {
+        <span class="key">"FONCIERMCP_API_KEY"</span>: <span class="str">"votre_cle_api_ici"</span>,
+        <span class="key">"FONCIERMCP_URL"</span>: <span class="str">"https://app-production-71c1.up.railway.app/mcp"</span>
+      }
+    }
+  }
+}</pre></div>
+<div class="install-step" style="border-color:var(--c-green);background:var(--c-green-light)"><div class="install-num" style="background:var(--c-green)">4</div><div><div class="install-title">Redémarrez Claude Desktop</div><div class="install-desc">Un symbole 🔌 apparaît en bas de la fenêtre — FoncierMCP est actif. Tapez "Analyse le 15 rue Garibaldi, Lyon 3e".</div></div></div>
+</div>
+<div class="api-section" id="compatibilite"><h2>🔌 Compatibilité</h2>
+<div class="compat-grid">
+<div class="compat-card"><div class="compat-icon">🤖</div><div class="compat-name">Claude Desktop</div><div style="font-size:0.72rem;color:var(--c-green)">✓ Compatible</div></div>
+<div class="compat-card"><div class="compat-icon">⚡</div><div class="compat-name">Cursor</div><div style="font-size:0.72rem;color:var(--c-green)">✓ Compatible</div></div>
+<div class="compat-card"><div class="compat-icon">💻</div><div class="compat-name">VS Code + MCP</div><div style="font-size:0.72rem;color:var(--c-green)">✓ Compatible</div></div>
+<div class="compat-card"><div class="compat-icon">🧠</div><div class="compat-name">ChatGPT</div><div style="font-size:0.72rem;color:var(--c-gold)">⏳ Bientôt</div></div>
+<div class="compat-card"><div class="compat-icon">💎</div><div class="compat-name">Gemini</div><div style="font-size:0.72rem;color:var(--c-gold)">⏳ Annoncé</div></div>
+<div class="compat-card"><div class="compat-icon">🔧</div><div class="compat-name">Client custom</div><div style="font-size:0.72rem;color:var(--c-green)">✓ API REST</div></div>
+</div></div>
+<div class="api-section" id="auth"><h2>🔑 Authentification</h2>
+<p>Chaque requête inclut la clé API dans l'en-tête <code class="code-inline">X-API-Key</code>.</p>
+<div class="code-block"><span class="cb-lang">bash</span><pre>curl -X POST https://app-production-71c1.up.railway.app/api/demo \
+  -H <span class="str">"Content-Type: application/json"</span> \
+  -d <span class="str">'{"address": "15 rue Garibaldi, 69003 Lyon"}'</span></pre></div>
+<p>L'endpoint <code class="code-inline">/api/demo</code> est gratuit et sans auth (limité à 10 req/h par IP).</p></div>
+<div class="api-section" id="outils"><h2>🛠 Référence des outils</h2>
+<div class="tool-card"><div class="tool-header"><span class="tool-name">analyze_parcel</span><span class="tool-method">OUTIL PRINCIPAL</span></div><div class="tool-desc">Analyse complète : cadastre + DVF + PLU + géorisques + DPE en parallèle. Temps moyen : 1,8 secondes.</div><table class="param-table"><thead><tr><th>Paramètre</th><th>Type</th><th>Requis</th><th>Description</th></tr></thead><tbody><tr><td class="param-name">address</td><td>string</td><td><span class="param-req">requis</span></td><td>Adresse complète (numéro, rue, code postal, ville)</td></tr><tr><td class="param-name">dvf_radius</td><td>integer</td><td><span class="param-opt">optionnel</span></td><td>Rayon DVF en mètres (défaut : 500, max : 2000)</td></tr></tbody></table></div>
+<div class="tool-card"><div class="tool-header"><span class="tool-name">get_dvf_history</span></div><div class="tool-desc">Historique transactions DVF autour d'une adresse. Source : DGFiP / data.gouv.fr.</div><table class="param-table"><thead><tr><th>Paramètre</th><th>Type</th><th>Requis</th></tr></thead><tbody><tr><td class="param-name">address</td><td>string</td><td><span class="param-req">requis</span></td></tr><tr><td class="param-name">radius</td><td>integer</td><td><span class="param-opt">optionnel</span></td></tr></tbody></table></div>
+<div class="tool-card"><div class="tool-header"><span class="tool-name">check_plu_rules</span></div><div class="tool-desc">Zone PLU et constructibilité. Source : Géoportail Urbanisme IGN/DGALN.</div></div>
+<div class="tool-card"><div class="tool-header"><span class="tool-name">get_erp_risks</span></div><div class="tool-desc">Risques naturels et technologiques (ERP). Source : BRGM / Géorisques.</div></div>
+<div class="tool-card"><div class="tool-header"><span class="tool-name">get_dpe</span></div><div class="tool-desc">Distribution étiquettes DPE dans la commune. Source : Base nationale DPE ADEME.</div></div>
+</div>
+<div class="api-section" id="erreurs"><h2>⚠️ Codes d'erreur</h2>
+<table class="param-table" style="background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius)"><thead><tr><th>Code</th><th>Signification</th><th>Solution</th></tr></thead><tbody>
+<tr><td style="color:var(--c-red);font-family:var(--mono)">401</td><td>Clé API manquante</td><td>Ajoutez l'en-tête X-API-Key</td></tr>
+<tr><td style="color:var(--c-red);font-family:var(--mono)">403</td><td>Clé invalide</td><td>Vérifiez votre clé ou renouvelez l'abonnement</td></tr>
+<tr><td style="color:var(--c-gold);font-family:var(--mono)">429</td><td>Quota dépassé</td><td>Attendez ou passez au plan supérieur</td></tr>
+<tr><td style="color:var(--c-muted);font-family:var(--mono)">400</td><td>Adresse invalide</td><td>Précisez ville et rue minimum</td></tr>
+</tbody></table></div>
+<div class="api-section" id="exemples"><h2>💬 Exemples de prompts</h2>
+<div style="display:flex;flex-direction:column;gap:0.75rem">
+<div style="background:var(--c-bg2);border-left:3px solid var(--c-gold);padding:0.85rem 1.25rem;border-radius:0 var(--radius) var(--radius) 0;font-size:0.88rem;font-style:italic;color:var(--c-ink2)">« Analyse le bien au 24 quai Saint-Antoine, 69002 Lyon et dis-moi si le prix demandé de 450 000€ pour 75m² est cohérent. »</div>
+<div style="background:var(--c-bg2);border-left:3px solid var(--c-gold);padding:0.85rem 1.25rem;border-radius:0 var(--radius) var(--radius) 0;font-size:0.88rem;font-style:italic;color:var(--c-ink2)">« Prépare un résumé des vérifications préalables pour l'acte de vente du 8 place Bellecour, Lyon. Format notarial. »</div>
+<div style="background:var(--c-bg2);border-left:3px solid var(--c-gold);padding:0.85rem 1.25rem;border-radius:0 var(--radius) var(--radius) 0;font-size:0.88rem;font-style:italic;color:var(--c-ink2)">« Compare les prix au m² entre le cours Vitton et la rue Garibaldi à Lyon. Laquelle est la plus valorisée ? »</div>
+</div></div>
+</div></div></div></section>
+<section style="background:var(--c-gold);padding:4rem 0;text-align:center"><div class="container">
+<h2 style="font-family:'Lora',serif;color:white;margin-bottom:0.75rem">Prêt à intégrer FoncierMCP ?</h2>
+<p style="color:rgba(255,255,255,0.85);margin-bottom:2rem">Clé API active en 2 minutes · Starter 49€/mois · Sans engagement</p>
+<div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap">
+<a href="tarifs.html" style="background:white;color:var(--c-gold);font-weight:700;padding:0.85rem 2rem;border-radius:var(--radius-lg);text-decoration:none">Obtenir ma clé API</a>
+<a href="index.html#demo" style="background:transparent;color:white;font-weight:600;padding:0.85rem 2rem;border-radius:var(--radius-lg);text-decoration:none;border:2px solid rgba(255,255,255,0.6)">Tester sans inscription</a>
+</div></div></section>
+<footer class="site-footer"><div class="container"><div class="footer-grid">
+<div class="footer-brand"><div style="font-family:'Lora',serif;font-size:1.1rem;font-weight:600;color:white;margin-bottom:1rem">Foncier<span style="color:#D4A017">MCP</span></div><p>L'outil MCP de référence pour les professionnels.</p></div>
+<div class="footer-col"><h4>Produit</h4><ul class="footer-links"><li><a href="fonctionnalites.html">Fonctionnalités</a></li><li><a href="tarifs.html">Tarifs</a></li><li><a href="api.html">API</a></li></ul></div>
+<div class="footer-col"><h4>Métiers</h4><ul class="footer-links"><li><a href="notaires.html">Notaires</a></li><li><a href="agents.html">Agents</a></li><li><a href="promoteurs.html">Promoteurs</a></li></ul></div>
+<div class="footer-col"><h4>Légal</h4><ul class="footer-links"><li><a href="mentions-legales.html">Mentions légales</a></li><li><a href="cgu.html">CGU</a></li><li><a href="mailto:contact@fonciermcp.fr">Contact</a></li></ul></div>
+</div><div class="footer-bottom"><div>© 2026 Kayzen Lyon — FoncierMCP.</div><div class="footer-legal"><a href="mentions-legales.html">Mentions légales</a><a href="cgu.html">CGU</a></div></div></div></footer>
+<script src="assets/app.js"></script></body></html>
