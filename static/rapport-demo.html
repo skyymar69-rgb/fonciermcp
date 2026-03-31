@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rapport Foncier — 24 Quai Saint-Antoine 69002 Lyon [DÉMO]</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:13px;color:#1a1a1a;background:#f5f5f0}
+.page{max-width:920px;margin:0 auto;background:white;padding:2.5rem;box-shadow:0 4px 24px rgba(0,0,0,0.08)}
+.demo-banner{background:#1a1a1a;color:white;text-align:center;padding:0.75rem;margin:-2.5rem -2.5rem 2rem;font-size:0.8rem;letter-spacing:0.05em}
+.demo-banner strong{color:#B8860B}
+.rh{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:1.5rem;border-bottom:3px solid #B8860B;margin-bottom:1.75rem}
+.rl{font-size:1.35rem;font-weight:700;color:#B8860B}.rl span{color:#1a1a1a}
+.rm{text-align:right;font-size:0.72rem;color:#888;line-height:1.9}
+.rt h1{font-size:1.4rem;font-weight:700;margin-bottom:0.3rem}
+.rt .sub{font-size:0.82rem;color:#666;margin-bottom:1.5rem}
+.exec{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;background:#fffbf0;border:2px solid #B8860B;border-radius:8px;padding:1.25rem;margin-bottom:2rem}
+.ex-it{text-align:center}
+.ex-val{font-size:1.5rem;font-weight:700;color:#B8860B;display:block;line-height:1;margin-bottom:0.2rem}
+.ex-lbl{font-size:0.67rem;text-transform:uppercase;letter-spacing:0.07em;color:#888}
+.sec{margin-bottom:1.75rem}
+.sec-hd{display:flex;align-items:center;gap:0.6rem;padding:0.6rem 1rem;background:#1a1a1a;color:white;border-radius:6px 6px 0 0}
+.sec-ttl{font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em}
+.sec-src{margin-left:auto;font-size:0.62rem;color:rgba(255,255,255,0.55)}
+.sec-bd{border:1px solid #e0e0e0;border-top:none;border-radius:0 0 6px 6px;padding:1.25rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.gc{padding:0 1rem}.gc:first-child{padding-left:0;border-right:1px solid #f0f0f0;padding-right:1.25rem}
+.dr{display:flex;justify-content:space-between;align-items:baseline;padding:0.45rem 0;border-bottom:1px solid #f5f5f5;font-size:0.8rem}
+.dr:last-child{border-bottom:none}.dr span{color:#777}.dr b{font-weight:600;text-align:right}
+.zbadge{display:inline-block;padding:0.3rem 0.85rem;border-radius:20px;font-weight:700;font-size:0.85rem;background:#d4edda;color:#1a7a37;margin-bottom:8px}
+.vt{width:100%;border-collapse:collapse;font-size:0.78rem;margin-top:0.75rem}
+.vt th{background:#f5f5f5;padding:0.4rem 0.6rem;text-align:left;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:#888;border-bottom:2px solid #e0e0e0}
+.vt td{padding:0.4rem 0.6rem;border-bottom:1px solid #f5f5f5}
+.vt tr:last-child td{border-bottom:none}
+.pb{color:#B8860B;font-weight:700}
+.dpe-r{display:flex;align-items:center;gap:0.6rem;padding:0.45rem 0;border-bottom:1px solid #f5f5f5;font-size:0.8rem}
+.dpe-r:last-child{border-bottom:none}
+.db{width:26px;height:26px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;color:white;flex-shrink:0}
+.rrow{display:flex;align-items:center;gap:0.6rem;padding:0.35rem 0;border-bottom:1px solid #f5f5f5;font-size:0.82rem}
+.rrow:last-child{border-bottom:none}
+.rdot{width:7px;height:7px;border-radius:50%;background:#E07426;flex-shrink:0}
+.batgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-top:0.5rem}
+.batc{background:#f9f9f9;border-radius:6px;padding:0.75rem;font-size:0.8rem}
+.batc b{font-weight:600;display:block;margin-bottom:0.25rem}
+.stats-box{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:0.75rem;margin-bottom:1rem}
+.sm{background:#fffbf0;border:1px solid rgba(184,134,11,0.25);border-radius:6px;padding:0.75rem;text-align:center}
+.sm .sv{font-size:1.4rem;font-weight:700;color:#B8860B;display:block;line-height:1}
+.sm .su{font-size:0.75rem;color:#B8860B}
+.sm .sl{font-size:0.62rem;color:#888;text-transform:uppercase;display:block;margin-top:0.2rem}
+.si{background:#f9f9f9;border:1px solid #e8e8e8;border-radius:6px;padding:0.5rem 0.75rem}
+.si .sl{font-size:0.68rem;color:#888;text-transform:uppercase;display:block;margin-bottom:0.15rem}
+.si .sv{font-weight:700;font-size:0.82rem}
+.flood-box{margin-top:0.75rem;padding:0.75rem;background:#eff8ff;border-left:3px solid #3b82f6;border-radius:0 4px 4px 0;font-size:0.82rem}
+.argile-box{margin-top:0.75rem;padding:0.75rem;background:#f9f9f9;border-radius:4px;font-size:0.82rem}
+.footer-rf{margin-top:2.5rem;padding-top:1rem;border-top:1px solid #e0e0e0;font-size:0.7rem;color:#aaa;display:flex;justify-content:space-between;gap:2rem}
+.print-btn{display:block;text-align:center;margin:2rem 0 1rem}
+.print-btn button{background:#B8860B;color:white;border:none;padding:0.75rem 2.5rem;border-radius:6px;font-size:0.95rem;font-weight:600;cursor:pointer}
+.note{font-size:0.72rem;color:#aaa;margin-top:0.75rem}
+.cta-box{background:linear-gradient(135deg,#1a1a1a,#2d2d2d);color:white;border-radius:8px;padding:2rem;text-align:center;margin:2rem 0}
+.cta-box h3{font-size:1.1rem;margin-bottom:0.5rem;color:white}
+.cta-box p{font-size:0.85rem;color:rgba(255,255,255,0.7);margin-bottom:1.25rem}
+.cta-btn{background:#B8860B;color:white;border:none;padding:0.75rem 2rem;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
+@media print{body{background:white}.page{max-width:none;padding:1cm;box-shadow:none}.print-btn,.cta-box,.demo-banner{display:none}.sec{page-break-inside:avoid}@page{margin:1cm}}
+@media(max-width:700px){.exec{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}.gc:first-child{border-right:none;padding-right:0;border-bottom:1px solid #f0f0f0;padding-bottom:1rem;margin-bottom:1rem}.stats-box{grid-template-columns:1fr 1fr}.batgrid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="demo-banner">
+  ⚡ <strong>RAPPORT DE DÉMONSTRATION</strong> — Données réelles reconstituées à titre illustratif · 
+  <a href="https://app-production-71c1.up.railway.app" style="color:#B8860B">Créer un compte pour accéder à vos rapports</a>
+</div>
+
+<div class="rh">
+  <div>
+    <div class="rl">Lex <span>Foncier</span></div>
+    <div style="font-size:0.7rem;color:#aaa;margin-top:0.15rem">La donnée foncière fiable, instantanée, opposable</div>
+  </div>
+  <div class="rm">
+    Rapport généré le 31/03/2026 à 14h22<br>
+    Sources : BAN · IGN · DGFiP · GPU · Géorisques · ADEME<br>
+    Durée d'analyse : 8.4s · Géocodage : 96%
+  </div>
+</div>
+
+<div class="rt">
+  <h1>24 Quai Saint-Antoine, 69002 Lyon</h1>
+  <div class="sub">Lyon 2e · 69002 · Dép. 69 · Rhône-Alpes · Code INSEE : 69382</div>
+</div>
+
+<div class="exec">
+  <div class="ex-it"><span class="ex-val">1&nbsp;247</span><span class="ex-lbl">m² parcelle</span></div>
+  <div class="ex-it"><span class="ex-val">5&nbsp;890</span><span class="ex-lbl">€/m² médiane DVF</span></div>
+  <div class="ex-it"><span class="ex-val">Uj</span><span class="ex-lbl">Zone PLU</span></div>
+  <div class="ex-it"><span class="ex-val">2</span><span class="ex-lbl">Risque(s)</span></div>
+</div>
+
+<!-- 1. CADASTRE -->
+<div class="sec">
+  <div class="sec-hd"><span>🗺️</span><span class="sec-ttl">1. Identification cadastrale</span><span class="sec-src">IGN API Carto</span></div>
+  <div class="sec-bd">
+    <div class="g2">
+      <div class="gc">
+        <div class="dr"><span>Référence cadastrale</span><b>69123BA0024</b></div>
+        <div class="dr"><span>Section</span><b>BA</b></div>
+        <div class="dr"><span>Numéro</span><b>0024</b></div>
+        <div class="dr"><span>Surface parcelle</span><b>1 247 m²</b></div>
+      </div>
+      <div class="gc">
+        <div class="dr"><span>Commune</span><b>Lyon</b></div>
+        <div class="dr"><span>Code département</span><b>69</b></div>
+        <div class="dr"><span>Code INSEE cadastre</span><b>69123</b></div>
+        <div class="dr"><span>Coordonnées GPS</span><b>45.76274, 4.83212</b></div>
+      </div>
+    </div>
+    <p class="note">Source : IGN — API Carto / Cadastre · Licence Ouverte Etalab v2.0</p>
+  </div>
+</div>
+
+<!-- 2. PLU -->
+<div class="sec">
+  <div class="sec-hd"><span>📐</span><span class="sec-ttl">2. Urbanisme & PLU</span><span class="sec-src">Géoportail Urbanisme — IGN / DGALN</span></div>
+  <div class="sec-bd">
+    <div style="margin-bottom:1rem"><span class="zbadge">Uj — Zone urbaine mixte</span> <span style="font-size:0.85rem;color:#333">Constructible</span></div>
+    <div class="g2">
+      <div class="gc">
+        <div class="dr"><span>Type de zone</span><b>Uj (Zone urbaine)</b></div>
+        <div class="dr"><span>Libellé complet</span><b>Zone Urbaine Mixte — Centre</b></div>
+        <div class="dr"><span>Constructibilité</span><b style="color:#1a7a37">Constructible</b></div>
+      </div>
+      <div class="gc">
+        <div class="dr"><span>Type document</span><b>PLU</b></div>
+        <div class="dr"><span>État</span><b>Approuvé</b></div>
+        <div class="dr"><span>Date approbation</span><b>14/06/2019</b></div>
+      </div>
+    </div>
+    <p style="margin-top:0.75rem;font-size:0.8rem;color:#555"><b>Détail :</b> Zone urbaine Uj — Construction autorisée sous conditions PLU. Hauteur max : R+6. Emprise au sol : 70%. Mixité fonctionnelle imposée.</p>
+    <a href="#" style="font-size:0.78rem;color:#B8860B;display:inline-block;margin-top:0.5rem">↗ Accéder au règlement PDF</a>
+  </div>
+</div>
+
+<!-- 3. DVF -->
+<div class="sec">
+  <div class="sec-hd"><span>💶</span><span class="sec-ttl">3. Marché immobilier — Transactions DVF</span><span class="sec-src">DGFiP / data.gouv.fr</span></div>
+  <div class="sec-bd">
+    <div class="stats-box">
+      <div class="sm"><span class="sv">5 890</span><span class="su">€/m²</span><span class="sl">Prix médian</span></div>
+      <div class="si"><span class="sl">Prix moyen</span><span class="sv">6 120 €/m²</span></div>
+      <div class="si"><span class="sl">Min / Max</span><span class="sv">4 800 – 8 200 €</span></div>
+      <div class="si"><span class="sl">Transactions</span><span class="sv">14 ventes</span></div>
+    </div>
+    <table class="vt">
+      <thead><tr><th>Date</th><th>Type de bien</th><th>Nature</th><th>Surface bâti</th><th>Valeur</th><th>€/m²</th></tr></thead>
+      <tbody>
+        <tr><td>2025-11</td><td>Appartement 4 pièces</td><td>Vente</td><td>98 m²</td><td>618 000 €</td><td class="pb">6 306 €</td></tr>
+        <tr><td>2025-09</td><td>Appartement 2 pièces</td><td>Vente</td><td>52 m²</td><td>289 000 €</td><td class="pb">5 558 €</td></tr>
+        <tr><td>2025-07</td><td>Appartement 3 pièces</td><td>Vente</td><td>71 m²</td><td>435 000 €</td><td class="pb">6 127 €</td></tr>
+        <tr><td>2025-04</td><td>Appartement 5 pièces</td><td>Vente</td><td>142 m²</td><td>985 000 €</td><td class="pb">6 937 €</td></tr>
+        <tr><td>2024-12</td><td>Appartement 2 pièces</td><td>Vente</td><td>48 m²</td><td>242 000 €</td><td class="pb">5 042 €</td></tr>
+        <tr><td>2024-10</td><td>Appartement 3 pièces</td><td>Vente</td><td>68 m²</td><td>388 000 €</td><td class="pb">5 706 €</td></tr>
+        <tr><td>2024-06</td><td>Local commercial</td><td>Vente</td><td>210 m²</td><td>1 680 000 €</td><td class="pb">8 000 €</td></tr>
+        <tr><td>2024-03</td><td>Appartement 3 pièces</td><td>Vente</td><td>74 m²</td><td>380 000 €</td><td class="pb">5 135 €</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Période : 2024-03 à 2025-11 · Rayon 500m · Données certifiées DGFiP non manipulables</p>
+  </div>
+</div>
+
+<!-- 4. RISQUES -->
+<div class="sec">
+  <div class="sec-hd"><span>⚠️</span><span class="sec-ttl">4. Risques naturels & technologiques (ERP)</span><span class="sec-src">Géorisques — BRGM</span></div>
+  <div class="sec-bd">
+    <div style="margin-bottom:1rem"><span style="background:#fff3cd;color:#856404;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.82rem;font-weight:600">2 risques identifiés</span></div>
+    <div class="rrow"><div class="rdot"></div><div><span style="font-weight:600">Inondation</span> <span style="color:#999;font-size:0.75rem">Code 11</span></div></div>
+    <div class="rrow"><div class="rdot"></div><div><span style="font-weight:600">Mouvement de terrain</span> <span style="color:#999;font-size:0.75rem">Code 13</span></div></div>
+    <div class="argile-box"><b>Retrait-gonflement des argiles :</b> Exposition faible (classe B1)</div>
+    <div class="flood-box"><b style="color:#1d4ed8">Zone inondable identifiée</b><br>2 zones dans un rayon de 500m · Consulter le PPRI en mairie</div>
+    <div style="margin-top:0.75rem;padding:0.75rem;background:#f9f9f9;border-radius:4px;font-size:0.82rem"><b>Radon :</b> Classe 2 — Potentiel radon notable. Aération recommandée.</div>
+    <p class="note">Source : Géorisques — BRGM / Ministère Transition Écologique · Licence Ouverte Etalab v2.0</p>
+  </div>
+</div>
+
+<!-- 5. DPE -->
+<div class="sec">
+  <div class="sec-hd"><span>🏠</span><span class="sec-ttl">5. Performance énergétique (DPE)</span><span class="sec-src">ADEME — Base nationale</span></div>
+  <div class="sec-bd">
+    <p style="font-size:0.78rem;color:#888;margin-bottom:0.75rem">8 DPE disponibles dans un rayon de 300m</p>
+    <div class="dpe-r"><div class="db" style="background:#E07426">E</div><div class="db" style="background:#E8B800">D</div><span style="font-size:0.8rem">Appartement · 68 m² · Construit 1895</span><span style="margin-left:auto;font-size:0.72rem;color:#aaa">124m</span></div>
+    <div class="dpe-r"><div class="db" style="background:#C8D82A">C</div><div class="db" style="background:#C8D82A">C</div><span style="font-size:0.8rem">Appartement · 82 m² · Construit 2014</span><span style="margin-left:auto;font-size:0.72rem;color:#aaa">187m</span></div>
+    <div class="dpe-r"><div class="db" style="background:#2DC653">A</div><div class="db" style="background:#2DC653">A</div><span style="font-size:0.8rem">Immeuble · 320 m² · Construit 2021</span><span style="margin-left:auto;font-size:0.72rem;color:#aaa">203m</span></div>
+    <div class="dpe-r"><div class="db" style="background:#F0A617">E</div><div class="db" style="background:#E07426">F</div><span style="font-size:0.8rem">Appartement · 45 m² · Construit 1962</span><span style="margin-left:auto;font-size:0.72rem;color:#aaa">241m</span></div>
+    <div class="dpe-r"><div class="db" style="background:#79CC41">B</div><div class="db" style="background:#79CC41">B</div><span style="font-size:0.8rem">Appartement · 94 m² · Construit 2008</span><span style="margin-left:auto;font-size:0.72rem;color:#aaa">289m</span></div>
+    <p class="note">353 820 DPE disponibles en dep. 69 · Source : ADEME Licence Ouverte Etalab v2.0</p>
+  </div>
+</div>
+
+<!-- 6. BÂTIMENTS -->
+<div class="sec">
+  <div class="sec-hd"><span>🏗️</span><span class="sec-ttl">6. Bâtiments (BDTOPO)</span><span class="sec-src">IGN — BDTOPO v3</span></div>
+  <div class="sec-bd">
+    <p style="font-size:0.78rem;color:#888;margin-bottom:0.75rem">7 bâtiments identifiés · 5 avec logements</p>
+    <div class="batgrid">
+      <div class="batc"><b>Résidentiel</b><div>9 logements</div><div>6 étages · 22m</div><div style="color:#aaa;font-size:0.75rem">En service</div></div>
+      <div class="batc"><b>Commercial & services</b><div>2 logements</div><div>4 étages · 15m</div><div style="color:#aaa;font-size:0.75rem">En service</div></div>
+      <div class="batc"><b>Résidentiel</b><div>12 logements</div><div>7 étages · 24m</div><div style="color:#aaa;font-size:0.75rem">En service</div></div>
+    </div>
+    <p class="note">Source : IGN — BDTOPO v3 · Licence Ouverte Etalab v2.0</p>
+  </div>
+</div>
+
+<!-- 7. COMMUNE -->
+<div class="sec">
+  <div class="sec-hd"><span>🏛️</span><span class="sec-ttl">7. Données administratives commune</span><span class="sec-src">INSEE Géo</span></div>
+  <div class="sec-bd">
+    <div class="g2">
+      <div class="gc">
+        <div class="dr"><span>Commune</span><b>Lyon</b></div>
+        <div class="dr"><span>Arrondissement</span><b>Lyon 2e</b></div>
+        <div class="dr"><span>Code INSEE</span><b>69123</b></div>
+        <div class="dr"><span>Population</span><b>519 127 hab.</b></div>
+      </div>
+      <div class="gc">
+        <div class="dr"><span>Département</span><b>69 — Rhône</b></div>
+        <div class="dr"><span>Région</span><b>Auvergne-Rhône-Alpes</b></div>
+        <div class="dr"><span>Surface commune</span><b>47,8 km²</b></div>
+        <div class="dr"><span>Codes postaux</span><b>69001–69009</b></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-box">
+  <h3>Ce rapport est une démonstration</h3>
+  <p>Créez votre compte Lex Foncier pour analyser n'importe quelle adresse en France et générer des rapports opposables avec vos données réelles.</p>
+  <a href="https://app-production-71c1.up.railway.app" class="cta-btn">Créer mon compte — dès 49€/mois</a>
+</div>
+
+<div class="print-btn no-print">
+  <button onclick="window.print()">🖨️ Imprimer / Exporter PDF</button>
+  <p style="margin-top:0.4rem;font-size:0.73rem;color:#aaa">Ctrl+P puis "Enregistrer en PDF"</p>
+</div>
+
+<div class="footer-rf">
+  <div><b>Lex Foncier</b> — Rapport de démonstration<br>Ce rapport illustratif est fourni à titre d'exemple. Les données sont basées sur des sources publiques réelles mais ce document ne constitue pas un avis juridique ou immobilier.</div>
+  <div style="text-align:right"><b>Sources officielles (Licences Ouvertes Etalab) :</b><br>BAN (DINUM) · IGN API Carto · DGFiP DVF<br>GPU DGALN · Géorisques (BRGM) · ADEME DPE</div>
+</div>
+
+</div>
+</body>
+                                                                                        </html>
