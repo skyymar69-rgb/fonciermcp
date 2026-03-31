@@ -30,8 +30,9 @@ app.mount("/mcp", mcp.streamable_http_app())
 async def auth_middleware(request: Request, call_next):
     path = request.url.path
     public = ["/health","/webhook/stripe","/api/demo","/api/key/create","/",
-              "/rapport","/diagnostic","/tarifs.html","/fonctionnalites.html",
-              "/api.html","/notaires.html","/agents.html","/promoteurs.html",
+              "/rapport","/diagnostic","/rapport-demo",
+              "/tarifs.html","/fonctionnalites.html","/api.html",
+              "/notaires.html","/agents.html","/promoteurs.html",
               "/mentions-legales.html","/cgu.html"]
     if not path.startswith("/mcp") or any(path.startswith(e) for e in public):
         return await call_next(request)
@@ -46,7 +47,15 @@ async def auth_middleware(request: Request, call_next):
 
 @app.get("/health")
 async def health():
-    return {"status":"ok","service":"LexFoncier","version":"2.1"}
+    return {"status":"ok","service":"LexFoncier","version":"2.2"}
+
+@app.get("/rapport-demo")
+async def rapport_demo():
+    """Rapport de demonstration public - aucune authentification requise"""
+    f = "static/rapport-demo.html"
+    if os.path.exists(f):
+        return HTMLResponse(open(f).read())
+    return HTMLResponse("<h1>Rapport demo introuvable</h1>", status_code=404)
 
 @app.get("/diagnostic")
 async def diagnostic():
@@ -57,10 +66,9 @@ async def diagnostic():
         ("DVF_etalab", "https://api.dvf.etalab.gouv.fr/geoapi/mutations?lat=45.76&lon=4.83&dist=100"),
         ("GPU_IGN", "https://apicarto.ign.fr/api/gpu/zone-urba?lon=4.83&lat=45.76"),
         ("Georisques", "https://georisques.gouv.fr/api/v1/gaspar/risques?latlon=4.83,45.76&rayon=500"),
-        ("ADEME_dpe", "https://data.ademe.fr/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines?size=1"),
+        ("ADEME_dep69", "https://data.ademe.fr/data-fair/api/v1/datasets/dpe-69/lines?size=1"),
         ("INSEE_geo", "https://geo.api.gouv.fr/communes?code=69123"),
-        ("Data_gouv", "https://www.data.gouv.fr/api/1/datasets/?q=dvf&page_size=1"),
-        ("DVF_data", "https://files.data.gouv.fr/geo-dvf/latest/csv/69/communes/69123.csv.gz"),
+        ("BDTOPO", "https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities"),
     ]
     results = {}
     async with httpx.AsyncClient(timeout=8) as client:
@@ -68,8 +76,7 @@ async def diagnostic():
             t0 = time.time()
             try:
                 r = await client.get(url)
-                ct = r.headers.get("content-type","")[:30]
-                results[name] = {"status":r.status_code,"ms":round((time.time()-t0)*1000),"ok":r.status_code<400,"ct":ct}
+                results[name] = {"status":r.status_code,"ms":round((time.time()-t0)*1000),"ok":r.status_code<400}
             except Exception as e:
                 results[name] = {"status":0,"error":str(e)[:60],"ok":False}
     return results
