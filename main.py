@@ -2,6 +2,7 @@ import logging, os
 import uvicorn
 from fastapi import FastAPI, Request, Header, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from mcp.server.fastmcp import FastMCP
 from auth import verify, create as create_key
 from webhook import handle_webhook
@@ -14,14 +15,14 @@ from tools.dpe import get_dpe
 logging.basicConfig(level=os.getenv("LOG_LEVEL","INFO"))
 logger = logging.getLogger(__name__)
 
-mcp = FastMCP(name="FoncierMCP", instructions="Tu es FoncierMCP, assistant analyse fonciere France.")
+mcp = FastMCP(name="LexFoncier", instructions="Tu es Lex Foncier, assistant analyse fonciere France.")
 mcp.tool()(analyze_parcel)
 mcp.tool()(get_dvf_history)
 mcp.tool()(check_plu_rules)
 mcp.tool()(get_erp_risks)
 mcp.tool()(get_dpe)
 
-app = FastAPI(title="FoncierMCP", docs_url=None, redoc_url=None)
+app = FastAPI(title="Lex Foncier", docs_url=None, redoc_url=None)
 app.mount("/mcp", mcp.streamable_http_app())
 
 @app.middleware("http")
@@ -41,7 +42,7 @@ async def auth_middleware(request: Request, call_next):
 
 @app.get("/health")
 async def health():
-    return {"status": "ok", "service": "FoncierMCP"}
+    return {"status": "ok", "service": "LexFoncier"}
 
 @app.post("/webhook/stripe")
 async def stripe_webhook(request: Request):
@@ -63,13 +64,43 @@ async def api_create_key(request: Request, x_admin_secret: str = Header(default=
     key = await create_key(name=body.get("name",""), email=body.get("email",""), plan=body.get("plan","starter"))
     return {"api_key": key}
 
+def _serve_html(name: str) -> HTMLResponse:
+    f = f"static/{name}"
+    return HTMLResponse(open(f).read() if os.path.exists(f) else f"<h1>{name} introuvable</h1>")
+
 @app.get("/", response_class=HTMLResponse)
-async def index():
-    f = "static/index.html"
-    return HTMLResponse(open(f).read() if os.path.exists(f) else "<h1>FoncierMCP</h1><p><a href=/health>Health OK</a></p>")
+async def index(): return _serve_html("index.html")
+
+@app.get("/tarifs.html", response_class=HTMLResponse)
+async def tarifs(): return _serve_html("tarifs.html")
+
+@app.get("/fonctionnalites.html", response_class=HTMLResponse)
+async def fonctionnalites(): return _serve_html("fonctionnalites.html")
+
+@app.get("/api.html", response_class=HTMLResponse)
+async def api_page(): return _serve_html("api.html")
+
+@app.get("/notaires.html", response_class=HTMLResponse)
+async def notaires(): return _serve_html("notaires.html")
+
+@app.get("/agents.html", response_class=HTMLResponse)
+async def agents(): return _serve_html("agents.html")
+
+@app.get("/promoteurs.html", response_class=HTMLResponse)
+async def promoteurs(): return _serve_html("promoteurs.html")
+
+@app.get("/mentions-legales.html", response_class=HTMLResponse)
+async def mentions_legales(): return _serve_html("mentions-legales.html")
+
+@app.get("/cgu.html", response_class=HTMLResponse)
+async def cgu(): return _serve_html("cgu.html")
+
+# Sert les assets statiques (CSS, JS, images) — DOIT être après les routes
+if os.path.isdir("static/assets"):
+    app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", os.getenv("MCP_PORT", "8000")))
     host = os.getenv("MCP_HOST", "0.0.0.0")
-    logger.info(f"FoncierMCP sur {host}:{port}")
+    logger.info(f"Lex Foncier sur {host}:{port}")
     uvicorn.run(app, host=host, port=port)
