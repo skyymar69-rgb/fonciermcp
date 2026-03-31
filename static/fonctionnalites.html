@@ -1,1 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fonctionnalités — Lex Foncier</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.page-hero{padding:7rem 0 3rem;background:linear-gradient(160deg,var(--c-bg) 0%,var(--c-bg2) 100%);border-bottom:1px solid var(--c-border);text-align:center}
+.feat-section{padding:5rem 0;border-bottom:1px solid var(--c-border)}.feat-section:last-of-type{border-bottom:none}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.feat-grid.reverse{direction:rtl}.feat-grid.reverse>*{direction:ltr}
+.feat-badge{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.15em;color:var(--c-gold);background:var(--c-gold-pale);padding:.3rem .85rem;border-radius:20px;margin-bottom:1.25rem}
+.feat-example{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:1.5rem;font-size:.82rem;line-height:1.9}
+.feat-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:var(--c-muted);margin-bottom:.75rem;font-family:var(--mono)}
+.data-row{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--c-border);font-size:.82rem}.data-row:last-child{border-bottom:none}
+.data-key{color:var(--c-muted)}.data-val{font-weight:600;color:var(--c-ink)}
+.source-box{background:var(--c-blue-light);border:1px solid rgba(26,58,107,.15);border-radius:var(--radius);padding:1rem 1.25rem;margin-top:1.5rem}
+.source-box p{font-size:.82rem;color:var(--c-blue);margin:0;line-height:1.5}
+.rapport-preview{background:white;border:1px solid #e0e0e0;border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.08)}
+.rp-header{background:#1a1a1a;padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center}
+.rp-exec{background:#fffbf0;border-bottom:2px solid #B8860B;padding:.75rem 1rem;display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;text-align:center}
+.rp-ev{font-size:1rem;font-weight:700;color:#B8860B}
+.rp-el{font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#888}
+.rp-sec-hd{background:#1a1a1a;color:white;padding:.3rem .7rem;font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;display:flex;justify-content:space-between;border-radius:4px 4px 0 0;margin-top:.4rem}
+.rp-sec-bd{border:1px solid #e0e0e0;border-top:none;border-radius:0 0 4px 4px;padding:.5rem .75rem}
+.rp-row{display:flex;justify-content:space-between;font-size:.75rem;padding:2px 0;border-bottom:1px solid #f5f5f5}
+.rp-row:last-child{border-bottom:none}
+.feat-list{display:flex;flex-direction:column;gap:.85rem}
+.feat-item{display:flex;gap:1rem;align-items:flex-start;padding:.85rem 1rem;background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius)}
+.feat-item-ico{font-size:1.1rem;flex-shrink:0}
+.feat-item-title{font-weight:600;margin-bottom:.2rem;font-size:.88rem}
+.feat-item-desc{font-size:.8rem;color:var(--c-muted)}
+.sources-encadre{background:var(--c-gold-pale);border:1px solid var(--c-gold-border);border-radius:var(--radius);padding:1rem 1.25rem;margin-top:1.5rem}
+@media(max-width:800px){.feat-grid,.feat-grid.reverse{grid-template-columns:1fr;direction:ltr}.rp-exec{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
 
+<nav class="site-nav"><div class="container"><div class="nav-inner">
+<a href="index.html" class="nav-logo">Lex <span>Foncier</span><span class="badge">MCP</span></a>
+<div class="nav-main">
+  <div class="nav-item">
+    <a href="fonctionnalites.html" class="nav-link active">Fonctionnalités <span class="nav-chevron">▾</span></a>
+    <div class="mega-menu">
+      <a href="#cadastre" class="mega-item"><div class="mega-icon">🗺</div><div><div class="mega-text-title">Cadastre IGN</div></div></a>
+      <a href="#dvf" class="mega-item"><div class="mega-icon">💶</div><div><div class="mega-text-title">Prix DVF</div></div></a>
+      <a href="#plu" class="mega-item"><div class="mega-icon">📐</div><div><div class="mega-text-title">PLU</div></div></a>
+      <a href="#georisques" class="mega-item"><div class="mega-icon">⚠️</div><div><div class="mega-text-title">Géorisques</div></div></a>
+      <a href="#dpe" class="mega-item"><div class="mega-icon">🏠</div><div><div class="mega-text-title">DPE</div></div></a>
+      <a href="#rapport" class="mega-item"><div class="mega-icon">📋</div><div><div class="mega-text-title">Rapport PDF</div></div></a>
+    </div>
+  </div>
+  <div class="nav-item">
+    <a href="#" class="nav-link">Professionnels <span class="nav-chevron">▾</span></a>
+    <div class="mega-menu">
+      <a href="notaires.html" class="mega-item"><div class="mega-icon">⚖️</div><div><div class="mega-text-title">Notaires</div></div></a>
+      <a href="agents.html" class="mega-item"><div class="mega-icon">🏢</div><div><div class="mega-text-title">Agents</div></div></a>
+      <a href="promoteurs.html" class="mega-item"><div class="mega-icon">🏗️</div><div><div class="mega-text-title">Promoteurs</div></div></a>
+    </div>
+  </div>
+  <div class="nav-item"><a href="tarifs.html" class="nav-link">Tarifs</a></div>
+  <div class="nav-item"><a href="api.html" class="nav-link">API</a></div>
+</div>
+<div class="nav-actions">
+  <a href="mailto:contact@lexfoncier.fr" class="btn-nav-login">Contact</a>
+  <a href="tarifs.html" class="btn-nav-cta">Commencer</a>
+  <button class="nav-mobile-btn">☰</button>
+</div>
+</div></div></nav>
+
+<div id="cookie-banner"><div class="cookie-text">Cookies essentiels. <a href="mentions-legales.html#cookies">En savoir plus</a></div><div class="cookie-actions"><button id="cookie-refuse" class="btn-cookie-refuse">Refuser</button><button id="cookie-accept" class="btn-cookie-accept">Accepter</button></div></div>
+
+<section class="page-hero"><div class="container">
+  <span class="section-eyebrow">// Les fonctionnalités</span>
+  <h1 style="margin-bottom:1rem">8 sources officielles.<br>1 seule requête.</h1>
+  <p style="color:var(--c-muted);font-size:1.05rem;max-width:55ch;margin:0 auto">Chaque outil interroge une API officielle française en temps réel. Aucune donnée n'est stockée.</p>
+</div></section>
+
+<section class="feat-section" id="cadastre"><div class="container"><div class="feat-grid">
+  <div>
+    <div class="feat-badge">🗺 01 / Cadastre</div>
+    <h2 style="margin-bottom:1rem">Référence cadastrale officielle</h2>
+    <p style="color:var(--c-muted);line-height:1.7;margin-bottom:1.5rem">La référence cadastrale identifie de manière unique chaque parcelle de France. Lex Foncier interroge l'API Carto IGN pour obtenir ces données à partir d'une simple adresse.</p>
+    <div class="source-box"><p><strong>Source :</strong> API Carto — IGN · Licence Ouverte v2.0</p></div>
+  </div>
+  <div><div class="feat-label">Exemple</div>
+    <div class="feat-example">
+      <div class="data-row"><span class="data-key">Référence</span><span class="data-val">69123 BA 0024</span></div>
+      <div class="data-row"><span class="data-key">Surface parcelle</span><span class="data-val">1 247 m²</span></div>
+      <div class="data-row"><span class="data-key">Section</span><span class="data-val">BA</span></div>
+      <div class="data-row"><span class="data-key">Commune</span><span class="data-val">Lyon 2e</span></div>
+    </div>
+  </div>
+</div></div></section>
+
+<section class="feat-section" id="dvf" style="background:var(--c-surface)"><div class="container"><div class="feat-grid reverse">
+  <div>
+    <div class="feat-badge">💶 02 / DVF</div>
+    <h2 style="margin-bottom:1rem">Prix de vente réels certifiés</h2>
+    <p style="color:var(--c-muted);line-height:1.7;margin-bottom:1.5rem">La base DVF recense toutes les transactions depuis 2014. Certifiées DGFiP, non manipulables. Médiane, moyenne, fourchette sur rayon paramétrable.</p>
+    <div class="source-box"><p><strong>Source :</strong> DVF — DGFiP / data.gouv.fr · Mise à jour trimestrielle</p></div>
+  </div>
+  <div><div class="feat-label">Exemple</div>
+    <div class="feat-example">
+      <div class="data-row"><span class="data-key">Prix médian</span><span class="data-val" style="color:var(--c-gold)">5 890 €/m²</span></div>
+      <div class="data-row"><span class="data-key">Prix moyen</span><span class="data-val">6 120 €/m²</span></div>
+      <div class="data-row"><span class="data-key">Min / Max</span><span class="data-val">4 800 – 8 200 €/m²</span></div>
+      <div class="data-row"><span class="data-key">Transactions</span><span class="data-val">14 ventes · rayon 500m</span></div>
+    </div>
+  </div>
+</div></div></section>
+
+<section class="feat-section" id="plu"><div class="container"><div class="feat-grid">
+  <div>
+    <div class="feat-badge">📐 03 / PLU</div>
+    <h2 style="margin-bottom:1rem">Règles d'urbanisme</h2>
+    <p style="color:var(--c-muted);line-height:1.7;margin-bottom:1.5rem">Zone PLU, constructibilité, lien vers le règlement PDF. Source : Géoportail de l'Urbanisme (DGALN).</p>
+    <div class="source-box"><p><strong>Source :</strong> Géoportail Urbanisme — IGN / DGALN</p></div>
+  </div>
+  <div><div class="feat-label">Exemple</div>
+    <div class="feat-example">
+      <div class="data-row"><span class="data-key">Zone</span><span class="data-val" style="color:var(--c-green)">Uj — Constructible</span></div>
+      <div class="data-row"><span class="data-key">Type document</span><span class="data-val">PLU approuvé 2019</span></div>
+      <div class="data-row"><span class="data-key">Règlement</span><span class="data-val" style="color:var(--c-gold)">↗ PDF disponible</span></div>
+    </div>
+  </div>
+</div></div></section>
+
+<section class="feat-section" id="georisques" style="background:var(--c-surface)"><div class="container"><div class="feat-grid reverse">
+  <div>
+    <div class="feat-badge">⚠️ 04 / Géorisques</div>
+    <h2 style="margin-bottom:1rem">Risques naturels et technologiques</h2>
+    <p style="color:var(--c-muted);line-height:1.7;margin-bottom:1.5rem">Inondation, séisme, mouvement de terrain, radon, argiles — l'équivalent numérique de l'ERP notarial via l'API BRGM.</p>
+    <div class="source-box"><p><strong>Source :</strong> Géorisques — BRGM / Ministère Transition Écologique</p></div>
+  </div>
+  <div><div class="feat-label">Exemple</div>
+    <div class="feat-example">
+      <div class="data-row"><span class="data-key">Inondation</span><span class="data-val">Crue lente — Zone B</span></div>
+      <div class="data-row"><span class="data-key">Argiles</span><span class="data-val">Exposition faible B1</span></div>
+      <div class="data-row"><span class="data-key">Radon</span><span class="data-val">Classe 2 — Notable</span></div>
+      <div style="margin-top:.75rem;color:var(--c-green);font-size:.78rem;font-weight:600">✓ Aucun risque technologique</div>
+    </div>
+  </div>
+</div></div></section>
+
+<section class="feat-section" id="dpe"><div class="container"><div class="feat-grid">
+  <div>
+    <div class="feat-badge">🏠 05 / DPE</div>
+    <h2 style="margin-bottom:1rem">Performance énergétique géolocalisée</h2>
+    <p style="color:var(--c-muted);line-height:1.7;margin-bottom:1.5rem">DPE géolocalisés dans un rayon de 300m avec étiquettes énergie et GES. Plus de 10 millions de DPE disponibles en France.</p>
+    <div class="source-box"><p><strong>Source :</strong> Base nationale DPE — ADEME · Dep. 69 : 353 820 DPE</p></div>
+  </div>
+  <div><div class="feat-label">Exemple</div>
+    <div class="feat-example">
+      <div class="data-row"><span class="data-key" style="color:#E07426;font-weight:700">E / D</span><span class="data-val">Appt. 68m² · 1895 · 124m</span></div>
+      <div class="data-row"><span class="data-key" style="color:#C8D82A;font-weight:700">C / C</span><span class="data-val">Appt. 82m² · 2014 · 187m</span></div>
+      <div class="data-row"><span class="data-key" style="color:#2DC653;font-weight:700">A / A</span><span class="data-val">Imm. 320m² · 2021 · 203m</span></div>
+      <div class="data-row"><span class="data-key" style="color:#D62E2E;font-weight:700">G / F</span><span class="data-val">Appt. 45m² · 1962 · 241m</span></div>
+    </div>
+  </div>
+</div></div></section>
+
+<section class="feat-section" id="rapport" style="background:var(--c-surface)"><div class="container">
+  <div style="text-align:center;margin-bottom:3rem">
+    <div class="feat-badge">📋 06 / Rapport PDF</div>
+    <h2 style="margin-bottom:1rem">Un rapport complet, imprimable, opposable</h2>
+    <p style="color:var(--c-muted);font-size:1.05rem;max-width:55ch;margin:0 auto;line-height:1.7">Toutes les données agrégées en un document professionnel. Sources officielles citées, prêt à imprimer ou exporter en PDF en un clic.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start">
+    <div>
+      <div class="feat-label">Aperçu du rapport</div>
+      <div class="rapport-preview">
+        <div class="rp-header">
+          <div style="color:#B8860B;font-weight:700;font-size:.9rem">Lex <span style="color:white">Foncier</span></div>
+          <div style="font-size:.65rem;color:rgba(255,255,255,.5)">Rapport généré le 31/03/2026</div>
+        </div>
+        <div class="rp-exec">
+          <div><div class="rp-ev">1 247</div><div class="rp-el">m² parcelle</div></div>
+          <div><div class="rp-ev">5 890</div><div class="rp-el">€/m² DVF</div></div>
+          <div><div class="rp-ev">Uj</div><div class="rp-el">Zone PLU</div></div>
+          <div><div class="rp-ev">2</div><div class="rp-el">Risques</div></div>
+        </div>
+        <div style="padding:.75rem 1rem">
+          <div class="rp-sec-hd"><span>🗺️ 1. Cadastre</span><span style="opacity:.4">IGN</span></div>
+          <div class="rp-sec-bd">
+            <div class="rp-row"><span style="color:#777">Référence</span><b>69123BA0024</b></div>
+            <div class="rp-row"><span style="color:#777">Surface</span><b>1 247 m²</b></div>
+            <div class="rp-row"><span style="color:#777">Commune</span><b>Lyon 2e</b></div>
+          </div>
+          <div class="rp-sec-hd" style="margin-top:.5rem"><span>💶 3. Transactions DVF</span><span style="opacity:.4">DGFiP</span></div>
+          <div class="rp-sec-bd">
+            <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;margin-bottom:6px">
+              <div style="background:#fffbf0;border:1px solid rgba(184,134,11,.2);border-radius:4px;padding:6px;text-align:center">
+                <div style="font-size:1rem;font-weight:700;color:#B8860B">5 890</div>
+                <div style="font-size:.6rem;color:#B8860B">€/m² médian</div>
+              </div>
+              <div style="background:#f9f9f9;border-radius:4px;padding:6px"><div style="font-size:.58rem;color:#888;text-transform:uppercase">Ventes</div><div style="font-weight:600;font-size:.78rem">14</div></div>
+              <div style="background:#f9f9f9;border-radius:4px;padding:6px"><div style="font-size:.58rem;color:#888;text-transform:uppercase">Période</div><div style="font-weight:600;font-size:.78rem">2024–25</div></div>
+            </div>
+            <table style="width:100%;font-size:.68rem;border-collapse:collapse">
+              <tr style="color:#888"><th style="text-align:left;padding:2px 4px;font-weight:500">Date</th><th style="text-align:left;padding:2px 4px;font-weight:500">Type</th><th style="text-align:right;padding:2px 4px;font-weight:500;color:#B8860B">€/m²</th></tr>
+              <tr style="border-top:1px solid #f5f5f5"><td style="padding:2px 4px">2025-11</td><td style="padding:2px 4px">Appt. 4p · 98m²</td><td style="padding:2px 4px;text-align:right;font-weight:600;color:#B8860B">6 306 €</td></tr>
+              <tr style="border-top:1px solid #f5f5f5"><td style="padding:2px 4px">2025-09</td><td style="padding:2px 4px">Appt. 2p · 52m²</td><td style="padding:2px 4px;text-align:right;font-weight:600;color:#B8860B">5 558 €</td></tr>
+              <tr style="border-top:1px solid #f5f5f5"><td style="padding:2px 4px">2025-07</td><td style="padding:2px 4px">Appt. 3p · 71m²</td><td style="padding:2px 4px;text-align:right;font-weight:600;color:#B8860B">6 127 €</td></tr>
+            </table>
+          </div>
+          <div style="text-align:center;padding:.4rem 0;font-size:.68rem;color:#aaa">… + Risques · DPE · Bâtiments · Commune · Adresse</div>
+        </div>
+        <div style="background:#f9f9f9;border-top:1px solid #e0e0e0;padding:.5rem 1rem;display:flex;justify-content:space-between">
+          <div style="font-size:.62rem;color:#aaa">BAN · IGN · DGFiP · GPU · Géorisques · ADEME</div>
+          <div style="font-size:.62rem;color:#B8860B;font-weight:600">Licences Etalab</div>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="/rapport-demo" target="_blank"
+           style="display:inline-flex;align-items:center;gap:.5rem;background:#B8860B;color:white;padding:.75rem 1.75rem;border-radius:6px;font-weight:600;font-size:.9rem;text-decoration:none">
+          Voir le rapport de démonstration ↗
+        </a>
+      </div>
+      <p style="font-size:.75rem;color:var(--c-muted);margin-top:.5rem">7 sections · Sources officielles · Imprimable · PDF</p>
+    </div>
+
+    <div>
+      <div class="feat-label">Ce que contient le rapport</div>
+      <div class="feat-list">
+        <div class="feat-item"><div class="feat-item-ico">🗺️</div><div><div class="feat-item-title">Identification cadastrale</div><div class="feat-item-desc">Référence, section, numéro, surface parcelle, code INSEE — source IGN officielle</div></div></div>
+        <div class="feat-item"><div class="feat-item-ico">📐</div><div><div class="feat-item-title">Zone PLU & urbanisme</div><div class="feat-item-desc">Zone, constructibilité, lien règlement PDF, état du document, date d'approbation</div></div></div>
+        <div class="feat-item"><div class="feat-item-ico">💶</div><div><div class="feat-item-title">Transactions DVF certifiées DGFiP</div><div class="feat-item-desc">Historique des ventes, prix médian/m², tableau complet des mutations</div></div></div>
+        <div class="feat-item"><div class="feat-item-ico">⚠️</div><div><div class="feat-item-title">Risques naturels & ERP</div><div class="feat-item-desc">Inondation, argiles, radon, séisme — équivalent numérique de l'ERP notarial</div></div></div>
+        <div class="feat-item"><div class="feat-item-ico">🏠</div><div><div class="feat-item-title">DPE & bâtiments BDTOPO</div><div class="feat-item-desc">DPE géolocalisés avec étiquettes, bâtiments IGN (usage, étages, logements)</div></div></div>
+        <div class="feat-item"><div class="feat-item-ico">🏛️</div><div><div class="feat-item-title">Données administratives INSEE</div><div class="feat-item-desc">Population, surface communale, département, région, codes postaux</div></div></div>
+      </div>
+      <div class="sources-encadre">
+        <div style="font-size:.78rem;font-weight:600;color:var(--c-gold);margin-bottom:.5rem">Sources officielles citées dans chaque rapport</div>
+        <div style="font-size:.75rem;color:var(--c-muted);line-height:1.8">BAN (DINUM) · IGN API Carto · DGFiP DVF · GPU DGALN<br>Géorisques BRGM · ADEME DPE · INSEE Géo · IGN BDTOPO<br><em>Licences Ouvertes Etalab v2.0</em></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="cta-banner" style="background:var(--c-gold)"><div class="container">
+  <h2 style="font-family:'Lora',serif;color:white">La donnée foncière fiable, instantanée, opposable</h2>
+  <p style="color:rgba(255,255,255,.85);margin-bottom:2rem">Démo gratuite · Sans engagement</p>
+  <div class="cta-actions">
+    <a href="index.html#demo" class="btn-cta-white">Tester</a>
+    <a href="/rapport-demo" class="btn-cta-outline" target="_blank">Voir le rapport démo</a>
+    <a href="tarifs.html" class="btn-cta-outline">Tarifs</a>
+  </div>
+</div></section>
+
+<footer class="site-footer"><div class="container"><div class="footer-grid">
+  <div class="footer-brand"><div style="font-family:'Lora',serif;font-size:1.1rem;font-weight:600;color:white;margin-bottom:.5rem">Lex <span style="color:#D4A017">Foncier</span></div><p>La donnée foncière fiable, instantanée, opposable.</p></div>
+  <div class="footer-col"><h4>Produit</h4><ul class="footer-links"><li><a href="fonctionnalites.html">Fonctionnalités</a></li><li><a href="tarifs.html">Tarifs</a></li><li><a href="api.html">API</a></li></ul></div>
+  <div class="footer-col"><h4>Métiers</h4><ul class="footer-links"><li><a href="notaires.html">Notaires</a></li><li><a href="agents.html">Agents</a></li><li><a href="promoteurs.html">Promoteurs</a></li></ul></div>
+  <div class="footer-col"><h4>Légal</h4><ul class="footer-links"><li><a href="mentions-legales.html">Mentions légales</a></li><li><a href="cgu.html">CGU</a></li></ul></div>
+</div><div class="footer-bottom"><div>© 2026 Kayzen Lyon — Lex Foncier.</div></div></div></footer>
+
+<script src="assets/app.js"></script>
+</body></html>
