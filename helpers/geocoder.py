@@ -1,6 +1,11 @@
-"""Geocodeur robuste BAN pour adresses françaises."""
+"""Geocodeur robuste BAN pour adresses francaises."""
 import httpx, logging
 logger = logging.getLogger(__name__)
+
+HEADERS = {
+    "User-Agent": "LexFoncier/2.0 (contact@lexfoncier.fr)",
+    "Accept": "application/json",
+}
 
 ARRONDISSEMENT_TO_CADASTRE = {
     "69381":"69123","69382":"69123","69383":"69123","69384":"69123","69385":"69123",
@@ -15,37 +20,56 @@ ARRONDISSEMENT_TO_CADASTRE = {
     "13216":"13055",
 }
 
+BAN_URLS = [
+    "https://api-adresse.data.gouv.fr/search/",
+    "https://photon.komoot.io/api/",
+]
+
 async def geocode_address(address: str) -> dict:
-    """Geocode une adresse française via BAN avec fallback."""
-    async with httpx.AsyncClient(timeout=10, follow_redirects=True) as client:
-        # Essai 1: housenumber
+    """Geocode une adresse via BAN avec fallback Komoot."""
+    async with httpx.AsyncClient(
+        timeout=12,
+        follow_redirects=True,
+        headers=HEADERS
+    ) as client:
+        # Essai 1 : BAN housenumber
+        for attempt in range(2):
+            params = {"q": address, "limit": 5}
+            if attempt == 0:
+                params["type"] = "housenumber"
+            try:
+                r = await client.get(
+                    "https://api-adresse.data.gouv.fr/search/",
+                    params=params
+                )
+                if r.status_code == 200:
+                    text = r.text.strip()
+                    if text and text.startswith("{"):
+                        data = r.json()
+                        feats = data.get("features", [])
+                        if feats:
+                            return _parse_ban(feats, address)
+            except Exception as e:
+                logger.warning(f"BAN attempt {attempt} failed: {e}")
+
+        # Essai 2 : Komoot Photon (fallback gratuit)
         try:
-            r = await client.get("https://api-adresse.data.gouv.fr/search/", params={
-                "q": address, "limit": 5, "type": "housenumber"
-            })
-            if r.status_code == 200 and r.text.strip():
-                data = r.json()
-                if data.get("features"):
-                    return _parse_ban(data, address)
+            r2 = await client.get(
+                "https://photon.komoot.io/api/",
+                params={"q": address + " France", "limit": 3, "lang": "fr"}
+            )
+            if r2.status_code == 200 and r2.text.strip():
+                data2 = r2.json()
+                feats2 = data2.get("features", [])
+                if feats2:
+                    return _parse_komoot(feats2, address)
         except Exception as e:
-            logger.warning(f"BAN housenumber failed: {e}")
+            logger.warning(f"Komoot fallback failed: {e}")
 
-        # Essai 2: sans type
-        try:
-            r = await client.get("https://api-adresse.data.gouv.fr/search/", params={
-                "q": address, "limit": 5
-            })
-            if r.status_code == 200 and r.text.strip():
-                data = r.json()
-                if data.get("features"):
-                    return _parse_ban(data, address)
-        except Exception as e:
-            logger.warning(f"BAN general failed: {e}")
+        raise ValueError(f"Adresse introuvable: {address}")
 
-        raise ValueError("Adresse introuvable dans la BAN: " + address)
-
-def _parse_ban(data: dict, address: str) -> dict:
-    best = max(data["features"], key=lambda f: f["properties"].get("score", 0))
+def _parse_ban(feats: list, address: str) -> dict:
+    best = max(feats, key=lambda f: f["properties"].get("score", 0))
     p = best["properties"]
     lon, lat = best["geometry"]["coordinates"]
     citycode = p.get("citycode", "")
@@ -66,4 +90,27 @@ def _parse_ban(data: dict, address: str) -> dict:
         "type": p.get("type", ""),
         "department": parts[0] if parts else "",
         "region": parts[-1] if len(parts) > 1 else "",
+    }
+
+def _parse_komoot(feats: list, address: str) -> dict:
+    """Parse Photon Komoot response comme fallback BAN."""
+    f = feats[0]
+    p = f.get("properties", {})
+    lon, lat = f["geometry"]["coordinates"]
+    postcode = str(p.get("postcode", ""))
+    citycode = ""
+    return {
+        "lat": lat, "lon": lon,
+        "label": p.get("name","") + " " + postcode + " " + p.get("city",""),
+        "score": 0.5,
+        "citycode": citycode,
+        "citycode_cadastre": citycode,
+        "city": p.get("city", p.get("locality","")),
+        "postcode": postcode,
+        "street": p.get("street", p.get("name","")),
+        "housenumber": str(p.get("housenumber","")),
+        "context": p.get("state",""),
+        "type": "housenumber",
+        "department": postcode[:2] if postcode else "",
+        "region": p.get("state",""),
     }
