@@ -2,9 +2,31 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+  <!-- SEO Meta Tags — Lex Foncier -->
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Lex Foncier — Kayzen Lyon">
+  <meta name="keywords" content="analyse foncière, cadastre France, DVF prix immobilier, PLU urbanisme, géorisques, DPE, données foncières, outil notaire, API immobilier France">
+  <link rel="canonical" href="https://app-production-71c1.up.railway.app/">
+  
+  <!-- Open Graph (GEO priority: social citations) -->
+  <meta property="og:title" content="Lex Foncier — Analyse foncière instantanée pour professionnels">
+  <meta property="og:description" content="Cadastre IGN, prix DVF DGFiP, PLU, géorisques BRGM et DPE ADEME en une seule requête. Économisez 40 minutes par dossier. Essai gratuit.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://app-production-71c1.up.railway.app/">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Lex Foncier">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lex Foncier — Analyse foncière instantanée">
+  <meta name="twitter:description" content="8 sources officielles françaises (IGN, DGFiP, BRGM, ADEME) agrégées en moins de 2 secondes. Pour notaires, agents et promoteurs.">
+  
+  <!-- Preconnect pour performance -->
+  <link rel="preconnect" href="https://api-adresse.data.gouv.fr">
+  <link rel="preconnect" href="https://apicarto.ign.fr">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Lex Foncier — La donnée foncière fiable, instantanée, opposable. Cadastre, DVF, PLU, géorisques, DPE pour les professionnels.">
-<title>Lex Foncier — La donnée foncière fiable, instantanée, opposable</title>
+<meta name="description" content="Lex Foncier agrège 8 sources officielles françaises (cadastre IGN, DVF DGFiP, PLU, géorisques BRGM, DPE ADEME) en moins de 10s. Économisez 40 min par dossier. Essai gratuit pour notaires, agents et promoteurs.">
+<title>Analyse Foncière Instantanée — Cadastre, DVF, PLU, Géorisques | Lex Foncier</title>
 <link rel="stylesheet" href="assets/style.css">
 <style>
 .hero{padding:7rem 0 4rem;background:linear-gradient(160deg,var(--c-bg) 0%,var(--c-bg2) 100%);border-bottom:1px solid var(--c-border)}
@@ -69,6 +91,120 @@
 @media(max-width:900px){.hero-inner,.prob-sol{grid-template-columns:1fr;gap:3rem}.feat-grid-home{grid-template-columns:1fr 1fr}.how-steps,.test-grid{grid-template-columns:1fr}.stats-inner{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.feat-grid-home{grid-template-columns:1fr}}
 </style>
+
+  <!-- Schema JSON-LD — GEO Optimization (priority O05, C09) -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Lex Foncier",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, API",
+      "description": "Lex Foncier est un outil d'analyse foncière professionnelle qui agrège 8 sources de données officielles françaises (cadastre IGN, DVF DGFiP, PLU GPU, géorisques BRGM, DPE ADEME) en moins de 2 secondes. Il génère des rapports fonciers complets et opposables pour les notaires, agents immobiliers et promoteurs.",
+      "url": "https://app-production-71c1.up.railway.app",
+      "offers": [
+        {"@type": "Offer", "name": "Starter", "price": "49", "priceCurrency": "EUR", "billingDuration": "P1M"},
+        {"@type": "Offer", "name": "Pro", "price": "149", "priceCurrency": "EUR", "billingDuration": "P1M"},
+        {"@type": "Offer", "name": "Cabinet", "price": "490", "priceCurrency": "EUR", "billingDuration": "P1M"}
+      ],
+      "featureList": [
+        "Cadastre IGN — référence parcellaire officielle",
+        "DVF DGFiP — transactions immobilières certifiées depuis 2014",
+        "PLU — règles d'urbanisme et constructibilité",
+        "Géorisques BRGM — risques naturels et technologiques (ERP)",
+        "DPE ADEME — performance énergétique géolocalisée",
+        "Bâtiments IGN BDTOPO — usage, étages, logements",
+        "Rapport PDF imprimable et opposable",
+        "API MCP compatible Claude, ChatGPT, Cursor"
+      ],
+      "publisher": {
+        "@type": "Organization",
+        "name": "Kayzen Lyon",
+        "url": "https://app-production-71c1.up.railway.app",
+        "email": "contact@lexfoncier.fr",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Lyon",
+          "addressCountry": "FR"
+        }
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qu'est-ce que l'analyse foncière ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L'analyse foncière est l'étude d'une parcelle de terrain à partir de données officielles : la référence cadastrale (IGN), les prix de vente passés (DVF DGFiP), les règles d'urbanisme du Plan Local d'Urbanisme (PLU), les risques naturels répertoriés (Géorisques BRGM) et la performance énergétique (DPE ADEME). Lex Foncier agrège ces 8 sources en moins de 2 secondes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment obtenir la référence cadastrale d'une adresse ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La référence cadastrale s'obtient via l'API Carto IGN à partir des coordonnées GPS d'une adresse. Lex Foncier géocode automatiquement l'adresse via la Base Adresse Nationale (BAN), puis interroge le cadastre IGN pour retourner la section, le numéro de parcelle et la surface en quelques secondes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qu'est-ce que le DVF et comment consulter les prix de vente ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le DVF (Demandes de Valeurs Foncières) est la base de données officielle des transactions immobilières, gérée par la DGFiP (Direction Générale des Finances Publiques). Elle recense toutes les ventes depuis 2014. Les données sont certifiées et non manipulables. Lex Foncier interroge l'API DVF pour retourner le prix médian au m², la fourchette min/max et le volume de transactions dans un rayon paramétrable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Combien de temps prend une analyse foncière complète avec Lex Foncier ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Lex Foncier génère une analyse foncière complète (cadastre, DVF, PLU, géorisques, DPE, bâtiments) en moins de 10 secondes, grâce à l'interrogation parallèle de 8 APIs officielles françaises. Sans outil, la même analyse prend entre 30 et 60 minutes en consultant manuellement chaque source."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Les données sont-elles fiables et à jour ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. Toutes les données proviennent d'APIs officielles françaises interrogées en temps réel : IGN (cadastre, PLU), DGFiP (DVF), BRGM (géorisques), ADEME (DPE), INSEE (communes). Elles sont sous Licences Ouvertes Etalab v2.0. Aucune donnée n'est stockée ou mise en cache par Lex Foncier."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Comment faire une analyse foncière avec Lex Foncier",
+      "description": "Obtenir une analyse foncière complète (cadastre, DVF, PLU, risques, DPE) en moins de 2 minutes",
+      "totalTime": "PT2M",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Saisir l'adresse",
+          "text": "Entrez n'importe quelle adresse française dans la barre de recherche Lex Foncier. La Base Adresse Nationale (BAN) géocode automatiquement l'adresse avec un score de précision."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Interrogation parallèle des 8 sources",
+          "text": "Lex Foncier interroge simultanément : le cadastre IGN, les prix DVF DGFiP, le PLU via le Géoportail de l'Urbanisme, les risques Géorisques BRGM, les DPE ADEME et les bâtiments BDTOPO IGN."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Consulter le rapport ou l'exporter en PDF",
+          "text": "Le rapport foncier complet est généré en moins de 10 secondes. Il est imprimable directement depuis le navigateur (Ctrl+P) ou exportable en PDF. Chaque source officielle est citée avec sa licence."
+        }
+      ]
+    }
+  ]
+  </script>
 </head><body><nav class="site-nav"><div class="container"><div class="nav-inner">
 <a href="index.html" class="nav-logo">Lex <span>Foncier</span><span class="badge">MCP</span></a>
 <div class="nav-main">
