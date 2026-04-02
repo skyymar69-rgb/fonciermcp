@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fonctionnalités — Lex Foncier</title>
+<title>Fonctionnalités Lex Foncier — Cadastre, DVF, PLU, Géorisques, DPE | 8 Sources Officielles</title>
+
+  <!-- SEO Meta Tags — Fonctionnalités Lex Foncier -->
+  <meta name="description" content="Découvrez les 8 sources de données officielles de Lex Foncier : cadastre IGN, DVF DGFiP (prix immobilier), PLU urbanisme, géorisques BRGM, DPE ADEME. Rapport PDF imprimable inclus.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://app-production-71c1.up.railway.app/fonctionnalites.html">
+  <meta property="og:title" content="Fonctionnalités Lex Foncier — 8 sources officielles, 1 rapport">
+  <meta property="og:description" content="Cadastre IGN, prix DVF DGFiP, PLU GPU, géorisques BRGM, DPE ADEME, bâtiments BDTOPO. Rapport PDF opposable en moins de 10 secondes.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://app-production-71c1.up.railway.app/fonctionnalites.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lex Foncier — 8 sources officielles en 1 requête">
 <link rel="stylesheet" href="assets/style.css">
 <style>
 .page-hero{padding:7rem 0 3rem;background:linear-gradient(160deg,var(--c-bg) 0%,var(--c-bg2) 100%);border-bottom:1px solid var(--c-border);text-align:center}
@@ -32,6 +43,74 @@
 .sources-encadre{background:var(--c-gold-pale);border:1px solid var(--c-gold-border);border-radius:var(--radius);padding:1rem 1.25rem;margin-top:1.5rem}
 @media(max-width:800px){.feat-grid,.feat-grid.reverse{grid-template-columns:1fr;direction:ltr}.rp-exec{grid-template-columns:1fr 1fr}}
 </style>
+
+  <!-- Schema JSON-LD Fonctionnalités — FAQPage + HowTo (GEO priority O05, C09) -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://app-production-71c1.up.railway.app/"},
+        {"@type": "ListItem", "position": 2, "name": "Fonctionnalités", "item": "https://app-production-71c1.up.railway.app/fonctionnalites.html"}
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qu'est-ce que le cadastre IGN et à quoi sert-il ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le cadastre est le registre officiel qui recense et identifie toutes les parcelles de France. Géré par l'IGN via l'API Carto, il fournit la référence parcellaire (section + numéro), la surface exacte en m², le code INSEE et la commune. Lex Foncier interroge l'API Carto IGN en temps réel pour identifier une parcelle à partir d'une simple adresse postale."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qu'est-ce que le DVF et comment est calculé le prix au m² ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le DVF (Demandes de Valeurs Foncières) est la base de données officielle des transactions immobilières de la DGFiP, publique depuis 2019. Elle recense toutes les ventes de biens immobiliers depuis 2014 avec le prix exact, la surface, la date et l'adresse. Lex Foncier calcule la médiane des prix au m² (plus robuste que la moyenne) sur un rayon paramétrable autour de l'adresse analysée."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment fonctionne le Plan Local d'Urbanisme (PLU) dans Lex Foncier ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le PLU détermine les règles de construction applicables à chaque parcelle : zones U (urbanisées, constructibles), AU (à urbaniser), A (agricoles) et N (naturelles). Lex Foncier interroge le Géoportail de l'Urbanisme (GPU) géré par l'IGN et la DGALN pour identifier la zone PLU, la constructibilité et fournir un lien direct vers le règlement PDF officiel de la commune."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qu'est-ce que l'ERP (État des Risques et des Pollutions) numérique ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L'ERP (État des Risques et des Pollutions) est un document obligatoire lors de toute transaction immobilière, listant les risques naturels et technologiques affectant un bien. Lex Foncier génère l'équivalent numérique de l'ERP via l'API Géorisques du BRGM (Bureau de Recherches Géologiques et Minières) : inondations, séismes, mouvements de terrain, radon et argiles."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment Lex Foncier récupère-t-il les DPE d'une adresse ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le DPE (Diagnostic de Performance Énergétique) est obligatoire depuis 2021 pour toute location ou vente immobilière. Lex Foncier interroge la base nationale des DPE gérée par l'ADEME (Agence de la Transition Écologique), qui contient plus de 10 millions de DPE géolocalisés. Pour le département du Rhône (69) seul, la base compte 353 820 DPE disponibles."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qu'est-ce qu'un rapport foncier PDF opposable ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Un rapport foncier opposable est un document professionnel citant les sources officielles de chaque donnée, utilisable dans un acte notarié ou une négociation immobilière. Lex Foncier génère un rapport de 7 sections (cadastre, PLU, DVF, risques, DPE, bâtiments, commune) avec les licences Etalab, exportable en PDF via l'impression navigateur (Ctrl+P)."
+          }
+        }
+      ]
+    }
+  ]
+  </script>
 </head>
 <body>
 
@@ -239,6 +318,38 @@
   </div>
 </div></section>
 
+
+<section style="background:var(--c-bg);padding:4rem 0;border-top:1px solid var(--c-border)" id="faq">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div class="feat-badge">❓ FAQ</div>
+      <h2 style="margin-bottom:0.75rem">Questions fréquentes</h2>
+      <p style="color:var(--c-muted);max-width:50ch;margin:0 auto">Réponses directes sur les données officielles utilisées par Lex Foncier.</p>
+    </div>
+    <div style="max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:1rem">
+      <details style="background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem">
+        <summary style="font-weight:600;cursor:pointer;font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center">Qu'est-ce que le cadastre IGN et à quoi sert-il ? <span style="color:var(--c-gold)">+</span></summary>
+        <p style="margin-top:1rem;color:var(--c-muted);line-height:1.7;font-size:0.88rem">Le cadastre est le registre officiel qui identifie toutes les parcelles de France. L'API Carto IGN fournit la référence parcellaire (section + numéro), la surface exacte en m² et le code INSEE. Lex Foncier la requête automatiquement à partir d'une adresse postale, via la géolocalisation BAN.</p>
+      </details>
+      <details style="background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem">
+        <summary style="font-weight:600;cursor:pointer;font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center">Qu'est-ce que le DVF et comment est calculé le prix au m² ? <span style="color:var(--c-gold)">+</span></summary>
+        <p style="margin-top:1rem;color:var(--c-muted);line-height:1.7;font-size:0.88rem">Le DVF (Demandes de Valeurs Foncières) recense toutes les transactions immobilières certifiées par la DGFiP depuis 2014. Lex Foncier calcule la médiane des prix au m² (plus robuste que la moyenne) sur un rayon paramétrable. <strong>Source : DGFiP / data.gouv.fr · Licence Ouverte Etalab v2.0</strong></p>
+      </details>
+      <details style="background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem">
+        <summary style="font-weight:600;cursor:pointer;font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center">Qu'est-ce que l'ERP numérique fourni par Lex Foncier ? <span style="color:var(--c-gold)">+</span></summary>
+        <p style="margin-top:1rem;color:var(--c-muted);line-height:1.7;font-size:0.88rem">L'État des Risques et des Pollutions (ERP) est obligatoire pour toute transaction immobilière. Lex Foncier génère l'équivalent numérique via l'API Géorisques BRGM : inondations, séismes, mouvements de terrain, radon, retrait-gonflement des argiles. <strong>Source : BRGM / Ministère Transition Écologique</strong></p>
+      </details>
+      <details style="background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem">
+        <summary style="font-weight:600;cursor:pointer;font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center">Combien de DPE sont disponibles dans la base ADEME ? <span style="color:var(--c-gold)">+</span></summary>
+        <p style="margin-top:1rem;color:var(--c-muted);line-height:1.7;font-size:0.88rem">La base nationale des DPE de l'ADEME contient plus de <strong>10 millions de diagnostics géolocalisés</strong> depuis juillet 2021. Pour le seul département du Rhône (69), 353 820 DPE sont disponibles. Lex Foncier les requête par coordonnées GPS dans un rayon de 300m autour de l'adresse analysée.</p>
+      </details>
+      <details style="background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem">
+        <summary style="font-weight:600;cursor:pointer;font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center">Les données sont-elles à jour et fiables ? <span style="color:var(--c-gold)">+</span></summary>
+        <p style="margin-top:1rem;color:var(--c-muted);line-height:1.7;font-size:0.88rem">Oui. Toutes les données sont interrogées <strong>en temps réel</strong> via les APIs officielles françaises (IGN, DGFiP, BRGM, ADEME, INSEE). Elles sont sous Licences Ouvertes Etalab v2.0. Lex Foncier ne stocke aucune donnée — chaque requête interroge directement la source officielle.</p>
+      </details>
+    </div>
+  </div>
+</section>
 <section class="cta-banner" style="background:var(--c-gold)"><div class="container">
   <h2 style="font-family:'Lora',serif;color:white">La donnée foncière fiable, instantanée, opposable</h2>
   <p style="color:rgba(255,255,255,.85);margin-bottom:2rem">Démo gratuite · Sans engagement</p>
